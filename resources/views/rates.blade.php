@@ -21,55 +21,82 @@
 	{{ Own::printHtmlFeedback($message, $class) }}
 
 	@if(count($tradings) > 0 && count($zones) > 0)
+
+
+		<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
 		
-		<div class="row">
+			<div class="modal-dialog" role="document">
+				
+				<div class="modal-content">
+					
+					<form action="addRate" method="post">
+
+						{{ csrf_field() }}
+
+						<div class="modal-body">
+								
+							<h4 class="modal-title">Tarifa</h4>
+
+							<hr>
+
+							<div class="row">
+								
+								<div class="col-sm-3">
+									{{ Own::arrayToDropdown('Giro', 'idTrading', $tradings) }}
+								</div>
+
+								<div class="col-sm-3">
+									{{ Own::arrayToDropdown('Zona', 'idZone', $zones) }}
+								</div>
+
+								<div class="col-sm-3">
+									{{ Own::arrayToDropdown('Local', 'isLocal', $localValues) }}
+								</div>
+
+								<div class="col-sm-3">
+									<input type="text" name="meterCharge" class="form-control numeric" placeholder="Tarifa" required>	
+								</div>
+
+							</div>
+
+							<br>
+							
+							<textarea name="comments" class="form-control" lenght="100" placeholder="Comentarios" required></textarea>
+								
+							<div class="row">
+								
+								<div class="col-sm-12 text-right">
+									
+									<button type="button" class="btn btn-danger" data-dismiss="modal">
+										<i class="glyphicon glyphicon-remove"></i>
+										Cancelar
+									</button>
+
+									<button type="submit" value="Agregar" class="btn btn-primary">
+										<i class="glyphicon glyphicon-plus"></i>
+										Agregar
+									</button>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</form>
+				
+				</div><!-- /.modal-content -->
 			
-			<div class="col-sm-offset-4 col-sm-4">
-				
-				<legend>
-				
-					Agregar
+			</div><!-- /.modal-dialog -->
+		
+		</div><!-- /.modal -->
 
-				</legend>
+		<button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+			<i class="glyphicon glyphicon-plus"></i>
+		</button>
 
-				<form action="addRate" method="post">
-
-					{{ csrf_field() }}
-					
-					{{ Own::arrayToDropdown('Giro', 'idTrading', $tradings) }}
-
-					<br>
-
-					{{ Own::arrayToDropdown('Zona', 'idZone', $zones) }}
-
-					<br>
-
-					{{ Own::arrayToDropdown('Local', 'isLocal', $localValues) }}
-
-					<br>
-
-					<input type="text" name="baseRate" class="form-control numeric" placeholder="Tarifa base" required>
-
-					<br>
-
-					<input type="text" name="perMeterRate" class="form-control numeric" placeholder="Tarifa por metro" required>	
-
-					<br>
-					
-					<textarea name="comments" class="form-control" lenght="100" placeholder="Comentarios" required></textarea>
-					
-					<br>
-
-					<input type="reset" value="Cancelar" class="btn btn-danger"> <input type="submit" value="Agregar" class="btn btn-primary">	
-
-					<br>
-					<br>		
-
-				</form>
-
-			</div>
-
-		</div>
+		<br>
+		<br>
 
 	@else
 
@@ -81,63 +108,7 @@
 
 	@endif
 
-	<div class="row">
-		
-		<div class="col-sm-12">
-			
-			@if(count($rates) > 0)
-
-				<div class="table-responsive">
-					
-					<table class="table table-bordered table-striped table-hover table-condensed">
-
-						<thead>
-
-							<td>Giro</td>
-							<td>Zona</td>
-							<td>Es local</td>
-							<td>Tarifa base</td>
-							<td>Tarifa por metro</td>
-							<td>F. Creacion</td>
-							<td>U. Modificaci&oacute;n</td>
-							<td>F. Eliminaci&oacute;n</td>
-
-						</thead>
-
-						<tbody>
-							
-							@foreach($rates as $rate)
-								
-								<tr>
-									
-									<td> {{ $rate['trading'] }} </td>
-									<td> {{ $rate['zone'] }} </td>
-									<td> {{ Own::boolToString($rate['isLocal']) }} </td>
-									<td> {{ $rate['baseRate'] }} </td>
-									<td> {{ $rate['perMeterRate'] }} </td>
-									<td> {{ $rate['created_at'] }} </td>
-									<td> {{ $rate['updated_at'] }} </td>
-									<td> {{ $rate['deleted_at'] }} </td>
-
-								</tr>
-
-							@endforeach
-							
-						</tbody>
-
-					</table>
-
-				</div>
-
-			@else
-
-				<h3>Sin tarifas agregadas</h3>
-
-			@endif
-
-		</div>
-
-	</div>
+	<? echo Own::arrayToTable($rates, 'updateRate', 'deleteRate', ['route' => '', 'glyphicon' => '', 'label' => 'label']); ?>
 
 
 @stop

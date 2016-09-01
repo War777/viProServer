@@ -10,13 +10,28 @@ use App\Own\Own;
 
 use App\Trading;
 
+use App\Rate;
+
 use DB;
 
 
 //Clase controladora de las categorias de comerciantes
 class TradingsController extends Controller
 {
-    
+
+    /**
+    *
+    * Funcion para mostrar las cetegorias disponibles sin parametros
+    * @return View tradings
+    *
+    */
+
+    public function displayGetTradings(){
+
+       return $this->displayTradings('', '');
+
+    }
+
     /**
 	*
 	* Funcion para mostrar las cetegorias disponibles
@@ -24,13 +39,18 @@ class TradingsController extends Controller
 	*
     */
 
-    public function displayTradings(){
+    public function displayTradings($message, $class){
 
-    	$query = 'select * from tradings;';
+    	$query = "SELECT
+            id as '+Id', 
+            description as 'Descripcion', 
+            created_at as 'F. Creacion .tc' 
+            FROM tradings
+            WHERE deleted_at IS NULL;";
 
     	$tradings = Own::queryToArray($query);
 
-    	return view('tradings', ['tradings' => $tradings]);
+    	return view('tradings', ['tradings' => $tradings, 'message' => $message, 'class' => $class]);
 
     }
 
@@ -81,7 +101,43 @@ class TradingsController extends Controller
     		'class' => $class
 		);
 
-    	return view('tradings', $data);
+    	return $this->displayTradings($message, $class);
+
+    }
+
+    /**
+    *
+    * Funcion para eliminar un giro comercial
+    * @param Request
+    * @return View
+    *
+    */
+
+    public function deleteTrading(Request $request){
+
+        $inputs = $request->toArray();          //Obtenemos las entradas
+
+        $message = '';                          //Declaramos los parametros
+        $class = '';
+
+        if(isset($inputs['id'])){               //Verificamos que exista un id
+
+            $trading = Trading::find($inputs['id']);  //Ubicamos la zona
+
+            if(isset($trading)){                   //Verificamos que exista la zona
+
+                $trading->delete();                //Eliminamos la zona
+
+                Rate::where('idTrading', $inputs['id'])->delete(); //Asi mismo eliminamos los cargos
+
+                $message = 'Giro eliminado con exito!'; //Modificamos los parametros
+                $class = 'bg-info';
+
+            }
+
+        }
+
+        return $this->displayTradings($message, $class);
 
     }
 

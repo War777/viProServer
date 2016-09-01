@@ -15,11 +15,11 @@ class CreateTableRates extends Migration
         //Creacion de la tabla de tarifas
         Schema::create('rates', function(Blueprint $table){
 
+            $table->increments('id');
             $table->integer('idTrading');
             $table->integer('idZone');
             $table->boolean('isLocal');
-            $table->integer('baseRate');
-            $table->integer('perMeterRate');
+            $table->integer('meterCharge');
             $table->string('comments', 100)->nullable();
 
         });

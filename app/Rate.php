@@ -4,11 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 //Clase modelo para las tarifas
 class Rate extends Model
 {
-    
+    use SoftDeletes;
+
 	protected $table = 'rates';
 
 	protected $fillable = [
@@ -16,10 +19,13 @@ class Rate extends Model
 		'idTrading',
 		'idZone',
 		'isLocal',
-		'baseRate',
-		'perMeterRate',
+		'meterCharge',
 		'comment'
 		
 	];
+
+	protected $dates = ['deleted_at'];
+
+
 
 }

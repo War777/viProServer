@@ -8,7 +8,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
+use Session;
 use App\Own\Own;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -59,9 +61,9 @@ class AuthController extends Controller
 
     /**
      * Create a new user instance after a valid registration.
-     *
      * @param  array  $data
      * @return User
+     *
      */
     protected function create(array $data)
     {
@@ -70,6 +72,87 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+    *
+    * Funcion para verificar el inicio de sesion
+    * @param Request $request
+    * @return view responseView
+    *
+    */
+
+    public function checkLogin(Request $request){
+
+        $inputs = $request->toArray();
+
+        $remember = false;
+
+        if(isset($inputs['remember'])){
+            
+            $remember = true;
+
+        }
+
+
+        $data = array(
+
+            'email' => $inputs['email'],
+            'password' => $inputs['password'],
+
+        );
+
+        if(Auth::attempt($data, $remember)){
+
+            $menuArray = Auth::user()->getMenuArray(Auth::user()->id);                   //Obtenemos el menu de arreglo
+            $menuHtml = Auth::user()->getMenuHtml($menuArray);
+
+            $request->session()->put('menuHtml', $menuHtml);
+
+            return view('home');
+
+        } else {
+
+            $data = array(
+                'message' => 'Contrase&ntilde;a y/o password invalidos',
+                'class' => 'bg-danger',
+                'email' => $inputs['email'],
+            );
+
+            return view('login', $data);
+
+        }
+
+    }
+
+    /**
+    *
+    * Funcion que regresa la vista de login por dada la url por metodo get
+    * @return view login
+    *
+    */
+
+    public function displayLogin(){
+
+        return view('login');
+
+    }
+
+    /**
+    *
+    * Funcion para cerrar la sesion
+    * @return view login
+    *
+    */
+
+    public function logout(){
+
+        Session::forget('menuHtml');
+
+        Auth::logout();
+
+        return view('login', ['message' => 'Sesi&oacute;n cerrada con exito!', 'class' => 'bg-info']);
+
     }
 
 }

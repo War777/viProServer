@@ -20,11 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('lastName', 100);
             $table->string('secondName', 100);
             $table->date('birthDate');
+            $table->char('gender', 1);
             $table->string('password');
-            $table->string('email');
-            $table->string('phone', 10);
+            $table->string('email')->unique();
+            $table->string('phone', 10)->unique();
             $table->boolean('whatsapp');
-            $table->string('curp', 8);
+            $table->string('curp', 18)->unique();
             $table->string('street', 100);
             $table->text('gmap');
             $table->rememberToken();

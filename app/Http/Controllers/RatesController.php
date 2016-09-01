@@ -36,11 +36,11 @@ class RatesController extends Controller
 
 	public function displayRates($message, $class){
 
-		$tradingsQuery = 'select id as value, description as label from tradings;';
+		$tradingsQuery = 'select id as value, description as label from tradings where deleted_at is null;';
 
 		$tradings = Own::queryToArray($tradingsQuery);
 
-		$zonesQuery = 'select id as value, description as label from zones;';
+		$zonesQuery = 'select id as value, description as label from zones where deleted_at is null;';
 
 		$zones = Own::queryToArray($zonesQuery);
 
@@ -52,23 +52,20 @@ class RatesController extends Controller
 		);
 
 		$query = "select 
-				    r.idTrading as 'idTrading',
-				    t.description as 'trading',
-				    r.idZone as 'idZone',
-				    z.description as 'zone',
-				    r.isLocal as 'isLocal',
-				    r.baseRate as 'baseRate',
-				    r.perMeterRate as 'perMeterRate',
-				    r.comments as 'comments',
-				    r.created_at as 'created_at',
-				    r.updated_at as 'updated_at',
-				    r.deleted_at as 'deleted_at'
+					r.id as '+Id',
+				    t.description as 'Giro',
+				    z.description as 'Zona',
+				    r.isLocal as '!Es local',
+				    r.meterCharge as '\$\$\$Tarifa por metro',
+				    r.comments as 'Comentarios',
+				    r.created_at as 'F. Creacion .tc'
 				FROM
 				    rates r
 				        JOIN
 				    tradings t ON r.idTrading = t.id
 				        JOIN
-				    zones z ON r.idZone = z.id;";
+				    zones z ON r.idZone = z.id
+				    AND r.deleted_at is null;";
 
 		$rates = Own::queryToArray($query);
 
@@ -99,41 +96,157 @@ class RatesController extends Controller
 
 		$inputs = $request->toArray();
 
-		$rate = new Rate;
-
-		$rate->idTrading = $inputs['idTrading'];
-		$rate->idZone = $inputs['idZone'];
-		$rate->isLocal = $inputs['isLocal'];
-		$rate->baseRate = $inputs['baseRate'];
-		$rate->perMeterRate = $inputs['perMeterRate'];
-		$rate->comments = $inputs['comments'];
+		$rate = $this->firstOrNewRate($inputs);
 
 		$message = '';
 		$class = '';
 
-		try{
+		if(isset($rate)){
 
-			$status = $rate->save();
-
-			if($status == 1){
-
-				$message = 'Tarifa agregada con exito!';
-				$class = 'alert-success';
-
-			}
-
-		} catch(\Illuminate\Database\QueryException $e){
-
-			$message = 'Entrada duplicada';
-			$class = 'alert-danger';
+			$message = 'Tarifa agregada con exito!';
+			$class = 'alert-success';
 
 		}
 
 		return $this->displayRates($message, $class);
 
+	}
 
+	/**
+	*
+	* Funcion para eliminar una tarifa
+	* @param Request
+	* @return view
+	*
+	*/
+
+	public function deleteRate(Request $request){
+
+		$inputs = $request->toArray();
+
+		$message = '';
+		$class = '';
+
+		if(isset($inputs['id'])){
+
+			$rate = Rate::find($inputs['id']);
+
+			if(isset($rate)){
+
+				$rate->delete();
+
+				$message = 'Tarifa eliminada!';
+				$class = 'bg-info';
+
+			}
+
+		}
+
+		return $this->displayRates($message, $class);
 
 	}
 
+	/**
+	*
+	* Funcion para mostrar la plantilla de actualizacion
+	* @param Request
+	* @return View
+	*
+	*/
+
+	public function displayUpdateBlade(Request $request){
+
+		$inputs = $request->toArray();
+
+		if(isset($inputs['id'])){
+
+			$rateQuery = "SELECT 
+					r.id,
+					r.idTrading,
+				    t.description as 'trading',
+				    r.idZone,
+				    z.description as 'zone',
+				    r.isLocal,
+				    r.meterCharge,
+				    r.comments
+				FROM
+				    rates r
+				        JOIN
+				    tradings t ON r.idTrading = t.id
+				        JOIN
+				    zones z ON r.idZone = z.id
+				    AND r.deleted_at is null
+				    AND r.id = " . $inputs['id'] . ";";
+
+			$rate = Own::queryToSingleArray($rateQuery);
+
+			if(isset($rate)){
+
+				return view('updateRate', ['rate' => $rate]);
+
+			}
+
+		} else {
+
+			return $this->displayRates('', '');
+
+		}
+
+	}
+
+	/**
+	*
+	* Funcion para actualizar una tarifa
+	* @param Request
+	* @return View
+	*
+	*/
+
+	public function updateRate(Request $request){
+
+		$inputs = $request->toArray();
+
+		$rate = $this->firstOrNewRate($inputs);
+
+		$message = '';
+		$class = '';
+
+		if(isset($rate)){
+
+			$message = 'Tarifa actualizada con exito!';
+			$class = 'bg-info';
+
+		}
+
+		return $this->displayRates($message, $class);
+
+	}
+
+	/**
+   	*
+   	* Funcion para crear o actualizar una zonas
+   	* @param Array
+   	*
+   	*/
+
+   	public function firstOrNewRate($attributes){
+
+   		$rate = Rate::withTrashed()->firstOrNew(
+			[
+				'idTrading' => $attributes['idTrading'],
+				'idZone' => $attributes['idZone'],
+				'isLocal' => $attributes['isLocal'],
+
+   			]
+		);
+		
+		$rate->meterCharge = $attributes['meterCharge'];
+		$rate->comments = $attributes['comments'];
+   		$rate->deleted_at = null;
+   		$rate->save();
+
+   		return $rate;
+
+   	}
 
 }

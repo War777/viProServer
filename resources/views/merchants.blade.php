@@ -12,9 +12,11 @@
 
 @stop
 
-{{ Own::printHtmlFeedback($message, $class) }}
+
 
 @section('content')
+		
+	{{ Own::printHtmlFeedback($message, $class) }}
 
 	<style>
 		input[type=file] {
@@ -28,7 +30,7 @@
 		Comerciantes
 	</h1>
 
-	<div class="row">
+<!-- 	<div class="row">
 		
 		<div class="col-sm-4 col-sm-offset-4">
 			
@@ -36,29 +38,25 @@
 				
 				{{ csrf_field() }}
 
-				<input type="text" name="names" class="form-control" placeholder="Nombre(s)" required value="Oscar Jesus">
+				<input type="text" name="names" class="form-control" placeholder="Nombre(s)" required value="">
 				<br>
-				<input type="text" name="firstName" class="form-control" placeholder="Apellido paterno" required  value="Resendiz">
+				<input type="text" name="firstName" class="form-control" placeholder="Apellido paterno" required  value="">
 				<br>
-				<input type="text" name="lastName" class="form-control" placeholder="Apellido materno" required  value="Mendoza">
+				<input type="text" name="lastName" class="form-control" placeholder="Apellido materno" required  value="">
 				<br>
-				{{ Own::arrayToDropdown('Local', 'isLocal', $localValues) }}
+				
 				<br>
-				<input type="text" name="phone" class="form-control numeric" placeholder="Telefono" required value="4411218973">
+				<input type="text" name="phone" class="form-control numeric" placeholder="Telefono" required value="">
 				<br>
-				{{ Own::arrayToDropdown('Giro', 'idTrading', $tradingsValues) }}
+				
 				<br>
-				{{ Own::arrayToDropdown('Zona', 'idZone', $zonesValues) }}
+				<input type="text" name="wideLength" class="form-control numeric" placeholder="Metros de largo" required value="">
 				<br>
-				{{ Own::arrayToDropdown('Ingreso', 'incomeType', $incomeValues) }}
+				<input type="text" name="frontLength" class="form-control numeric" placeholder="Metros de frente" required value="">
 				<br>
-				<input type="text" name="wideLength" class="form-control numeric" placeholder="Metros de largo" required value="1">
+				<input type="text" name="spotLightsOral" class="form-control numeric" placeholder="Focos" required value="">
 				<br>
-				<input type="text" name="frontLength" class="form-control numeric" placeholder="Metros de frente" required value="1">
-				<br>
-				<input type="text" name="spotLightsOral" class="form-control numeric" placeholder="Focos" required value="1">
-				<br>
-				<input type="text" name="spotLigthsReal" class="form-control numeric" placeholder="Focos reales" required value="1">
+				<input type="text" name="spotLigthsReal" class="form-control numeric" placeholder="Focos reales" required value="">
 				<br>
 				<label class="btn-file btn btn-info" id="inputLabel">
 					Imagen...
@@ -69,116 +67,36 @@
 				<input type="reset" value="Cancelar" class="btn btn-danger">
 				
 				<input type="submit" value="Enviar" class="btn btn-primary">
-				
-	
 
 			</form>
 
 		</div>
 		
-	</div>
+	</div> -->
 	
 	<br>
 
-	@if(count($merchants) > 0)
-	
-		<div class="row">
+	<div class="row">
+		
+		<div class="col-sm-12 text-right">
 			
-			<div class="col-sm-12">
-				
-				<div class="table-responsive">
-							
-					<table class="table table-bordered table-striped table-hover table-condensed">
+			<a href="addReceiptMerchant" class="btn btn-xs btn-primary">
+				<i class="glyphicon glyphicon-plus"></i>
+				Con recibo
+			</a>
 
-						<thead class="bg-info" align="center">
-							<td>Id</td>
-							<td>Nombre(s)</td>
-							<td>A. Paterno</td>
-							<td>A. Materno</td>
-							<td>C. Local</td>
-							<td>Telefono</td>
-							<td>G. Comercial</td>
-							<td>Zona</td>
-							<td>T. Ingreso</td>
-							<td>M. Largo</td>
-							<td>M. Frente</td>
-							<td>Focos</td>
-							<td>Focos Reales</td>
-							<td>Tarifa Base</td>
-							<td>Tarifa x Metro</td>
-							<td>Tarifa x luz</td>
-							<td>Total</td>
-							<td>Verificado</td>
-							<td>Puntuacion</td>
-
-							<td>F. Creacion</td>
-							<td>U. Modificaci&oacute;n</td>
-							<td>F. Eliminaci&oacute;n</td>
-
-							<td></td>
-
-						</thead>
-
-						<tbody>
-							
-							@foreach($merchants as $merchant)
-								
-								<tr>
-									
-									<td> {{ $merchant['id'] }} </td>
-									<td> {{ $merchant['names'] }} </td>
-									<td> {{ $merchant['firstName'] }} </td>
-									<td> {{ $merchant['lastName'] }} </td>
-									<td> {{ Own::boolToString($merchant['isLocal']) }} </td>
-									<td> {{ $merchant['phone'] }} </td>
-									<td> {{ $merchant['tradingDescription'] }} </td>
-									<td> {{ $merchant['zoneDescription'] }} </td>
-									<td> {{ $merchant['incomeType'] }} </td>
-									<td> {{ $merchant['wideLength'] }} </td>
-									<td> {{ $merchant['frontLength'] }} </td>
-									<td> {{ $merchant['spotLightsOral'] }} </td>
-									<td> {{ $merchant['spotLightsReal'] }} </td>
-									<td> {{ $merchant['baseRate'] }} </td>
-									<td> {{ $merchant['perMeterRate'] }} </td>
-									<td> {{ $merchant['cfeMeterRate'] }} </td>
-									<td> {{ $merchant['total'] }} </td>
-									<td> {{ Own::boolToString($merchant['isChecked']) }} </td>
-									<td> {{ $merchant['score'] }} </td>
-
-									<td> {{ $merchant['created_at'] }} </td>
-									<td> {{ $merchant['updated_at'] }} </td>
-									<td> {{ $merchant['deleted_at'] }} </td>
-									<td>
-										<form action="printReceipt" method="post">
-											{{ csrf_field() }}
-											<input type="hidden" name="id" value="{{$merchant['id']}}">
-											<button type="submit" class="btn btn-xs btn-default">
-												<i class="glyphicon glyphicon-print"></i>
-											</button>
-										</form>
-									</td>
-
-								</tr>
-
-							@endforeach
-							
-						</tbody>
-
-					</table>
-
-				</div>
-
-			</div>
+			<a href="addNewMerchant" class="btn btn-xs btn-primary">
+				<i class="glyphicon glyphicon-plus"></i>
+				Nuevo
+			</a>
 
 		</div>
 
-	@else
+	</div>
 	
-		<h4>
-			Sin comerciantes agregados
-		</h4>
-
-	@endif
+	<br>
+	
+	<? echo Own::arrayToTable($merchants, 'updateMerchant', 'deleteMerchant', ['route' => 'displayMerchantCharges', 'glyphicon' => 'glyphicon-usd', 'label' => 'Cargos']); ?>
 
 @stop
 

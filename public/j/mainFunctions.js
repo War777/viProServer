@@ -32,7 +32,7 @@ $(document).ready(function(){
 	*
 	*/
 
-	$('form').submit(function(){
+	$('form.validate').submit(function(){
 
 		var formData = $(this).serializeArray();
 
@@ -127,11 +127,119 @@ $(document).ready(function(){
 		
 	});
 
-	/*
+    /**
+    *
+    * Funcion para inicializar el datepicker
+    *
+    */
+
+	$('#dp3').datepicker({
+		'format' : 'yyyy-mm-dd'
+	});
+
+	/**
 	*
-	* Funcion que retorna un elemento de tipo BS dropdown dado un simple arreglo
+	* Funcion para aparecer el menu contextual de las tablas
 	*
 	*/
+
+	var $contextMenu = $(".tableMenu");
+  
+	$(".editable").on("contextmenu", "tr.tableRow", function(e) {
+
+		$contextMenu.css({
+			display: "block",
+			left: e.pageX,
+			top: e.pageY
+		});
+
+		var id = $(this).attr('id');
+
+		var updateRoute = $(this).closest('table').attr('updateRoute');
+		var deleteRoute = $(this).closest('table').attr('deleteRoute');
+		var specialRoute = $(this).closest('table').attr('specialRoute');
+		var specialRouteLabel = $(this).closest('table').attr('specialRouteLabel');
+
+		
+
+		if(updateRoute != ''){
+
+			$contextMenu.find('.updateAnchor').attr('href', updateRoute + '?id=' + id);	
+
+		} else {
+
+			$contextMenu.find('.updateAnchor').remove();
+
+		}
+
+		$contextMenu.find('.deleteAnchor').attr('href', deleteRoute + '?id=' + id);
+
+		if(specialRoute == ''){
+
+			$contextMenu.find('.specialAnchor').remove();
+
+		} else {
+
+			$contextMenu.find('.specialAnchor').attr('href', specialRoute + '?id=' + id);
+			$contextMenu.find('.specialAnchor').text(specialRouteLabel);
+
+		}
+
+		return false;
+
+	});
+
+	$('body').on('click', function(){			//Perdida del foco del menu
+		$contextMenu.hide();
+	});
+
+	$('html').on('click', function(){			//Perdida del foco del menu
+		$contextMenu.hide();
+	});
+
+	//Funcion para el estado de los menus
+	
+	$('.menuReadCheck').change(function(){ //Lectura
+
+		var id = $(this).attr('id');
+
+		var state = $(this).is(':checked');
+
+		var value = state == true ? 1 : 0;
+
+		$('#menuRead' + id).val(value);
+
+	});
+
+	$('.menuWriteCheck').change(function(){ //Escritura
+
+		var id = $(this).attr('id');
+
+		var state = $(this).is(':checked');
+
+		var value = state == true ? 1 : 0;
+
+		$('#menuWrite' + id).val(value);
+
+	});
+
+	/**
+	*
+	* Funcion para validar los eventos de eliminacion
+	*
+	*/
+
+	$('.deleteAnchor').click(function(){
+
+		var response = confirm("Esta seguro que desea eliminar este registro?");
+		
+		if (response == false) {
+
+			return false;
+
+		}
+
+	});
 
 });
 

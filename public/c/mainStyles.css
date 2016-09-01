@@ -155,6 +155,18 @@ td {
     font-size: 12px;
 }
 
+/**
+*
+* Estilo del menu contextual de las tablas
+*
+*/
+
+.tableMenu {
+    position: absolute;
+    display:none;
+}
+
+
 /*
 * Media queries para ajustar los estilos a diferentes resoluciones 
 */

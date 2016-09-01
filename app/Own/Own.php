@@ -20,33 +20,36 @@ use DB;
 
 		public static function arrayToDropdown($title, $inputName, $values){
 			
-			echo ''
+			if(count($values)){
+
+				echo ''
 ?>
-			<div class="dropdown">
+				<div class="dropdown">
 
-				<input type="hidden" name="<? echo $inputName ?>" class="dropDownValue" value="">
+					<input type="hidden" name="<? echo $inputName ?>" class="dropDownValue" value="">
 
-				<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu<?echo $title?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-					
-					<span class="dropDownLabel"><? echo $title ?> ... </span>
-					
+					<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu<?echo $title?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						
+						<span class="dropDownLabel"><? echo $title ?> ... </span>
+						
+						<span class="caret"></span>
 
-					<span class="caret"></span>
+					</button>
 
-				</button>
+					<ul class="dropdown-menu" aria-labelledby="dropDownMenu<?echo $title?>">
+	<?
+					foreach ($values as $value) {
+	?>
+						<li> <a href="#" class="dropDownOption" id="<? echo $value['value'] ?>"> <? echo $value['label'] ?> </a> </li>
+	<?
+					}
+	?>
+					</ul>
 
-				<ul class="dropdown-menu" aria-labelledby="dropDownMenu<?echo $title?>">
-<?
-				foreach ($values as $value) {
-?>
-					<li> <a href="#" class="dropDownOption" id="<? echo $value['value'] ?>"> <? echo $value['label'] ?> </a> </li>
-<?
-				}
-?>
-				</ul>
+				</div>
+<?			
+			}
 
-			</div>
-<?							
 		}
 
 
@@ -121,7 +124,7 @@ use DB;
 		}
 
 		//Funcion que convierte un array a una tabla bootstrap
-		public static function arrayToTable($array){
+		public static function arrayToTable($array, $updateFunction, $deleteFunction, $specialRoute){
 
 			if($array){
 
@@ -133,16 +136,30 @@ use DB;
 
 				$firstRow = true;
 
+				$id = -1;						//Variable para almacenar tempralmente el id
+
 				//Recorremos los registros
 				foreach ($array as $row) {
 
-					$tableBody .= "<tr>";
+					$tableRow = "<tr class='tableRow'>";
+
+					$firstCell = true;
+
 					//Recorremos las columnas
 					foreach ($row as $header => $value) {	
 
 						$cellClasses = "";
+						
+						if(Own::contains($header, "+", false) == true){ 	//Es id autoincrementable
 
-						if(Own::contains($header, "#", false) == true){	//Es numerico
+							$cellClasses = " text-right";
+							$header = str_replace("+", "", $header);
+							if($firstCell == true){ $tableRow = str_replace(">", " id='" . $value . "'>", $tableRow); }
+							$header = str_replace("-", "", $header);
+
+							$id = $value;
+
+						} else if(Own::contains($header, "#", false) == true){	//Es numerico
 							
 							$decimals = substr_count($header, "#");
 							$cellClasses = " text-right";
@@ -165,7 +182,22 @@ use DB;
 							$cellClasses = " text-right";
 							$header = str_replace("%", "", $header);
 
+						} else if(Own::contains($header, "!", false) == true){ //Es booleano
+
+							$cellClasses = " text-center";
+							$value = Own::boolToString($value);
+							$header = str_replace("!", "", $header);
+
 						}
+
+						if(Own::contains($header, ".tc", false) == true){		//Verificamos las clases adicionales
+
+							$header = str_replace(".tc", "", $header);
+							$cellClasses .= " text-center";
+
+						}
+
+
 
 						if($firstRow == true){
 
@@ -173,20 +205,57 @@ use DB;
 
 						}
 
-						$tableBody .= "<td class='" . $cellClasses . "'>" . $value . "</td>";
+						$tableRow .= "<td class='" . $cellClasses . "'>" . $value . "</td>";
 						
 					}
 
-					$tableBody .= "</tr>";
+					$tableHiddenHeaders = 0;
+
+					$tableRow .= "<td class='visible-xs visible-sm'>";
+
+					if($updateFunction != ''){			//Verificamos si existe la ruta de actualizacion
+
+						$tableRow .= "<a href='" . $updateFunction . "?id=" . $id . "' class='btn btn-xs btn-primary'><i class='glyphicon glyphicon-pencil'></i></a>";						
+
+						$tableHiddenHeaders++;
+
+					}
+
+					if($specialRoute['route'] != ''){			//Verificamos si existe la ruta de eliminacion
+
+						$tableRow .= "<a href='" . $specialRoute['route'] . "?id=" . $id . "' class='btn btn-xs btn-info'><i class='glyphicon " . $specialRoute['glyphicon'] . "'></i></a>";
+
+						$tableHiddenHeaders++;						
+
+					}
+
+					if($deleteFunction != ''){			//Verificamos si existe la ruta de eliminacion
+
+						$tableRow .= "<a href='" . $deleteFunction . "?id=" . $id . "' class='btn btn-xs btn-danger'><i class='glyphicon glyphicon-remove'></i></a>";
+						$tableHiddenHeaders++;								
+
+					}
+
+					$tableRow .= "</td>";
+
+					$tableRow .= "</tr>";
+
+					$tableBody .= $tableRow;
 
 					$firstRow = false;
+					
+				}
+
+				if($tableHiddenHeaders > 0){ 			//Verificamos que el encabezado contenga botones ocultos
+
+					$tableHeaders .= "<td class='visible-xs visible-sm'></td>";
 					
 				}
 
 				$tableHeaders .= "</thead>";
 
 				$table = "<div class='table-responsive'>"
-							. "<table class='table table-bordered table-hover table-condensed'>" 
+							. "<table class='table table-bordered table-hover table-condensed editable' updateRoute='" . $updateFunction . "' deleteRoute='" . $deleteFunction . "' specialRoute='" . $specialRoute['route'] . "' specialRouteLabel='" . $specialRoute['label'] . "' >" 
 								. $tableHeaders
 								. $tableBody 
 							. "</table>"
@@ -196,7 +265,7 @@ use DB;
 
 			} else {
 
-				return "Sin Datos";
+				return "<br><br><br><center><h4>Sin Datos</h4></center>";
 
 			}
 
@@ -599,6 +668,139 @@ use DB;
 			return $data;
 
 		}
+
+		/**
+		*
+		* Funcion para crear un arreglo de menus
+		* @return array menus
+		*
+		*/
+
+		static function createMenusArray(){
+
+	        $query = "select id, name, hasSubmenus, target, idParent
+	            from menus
+	            where deleted_at is null;";
+
+	        $menus = Own::queryToArray($query);
+
+	        $parentMenus = array();
+
+	        foreach ($menus as $menu) {
+	            
+	            if($menu['hasSubmenus'] == 1){ //Verificamos si tiene submenus para agregarlos
+
+	                $structuredMenu = array(
+
+	                    'id' => $menu['id'],
+	                    'name' => $menu['name'],
+	                    'target' => $menu['target'],
+	                    'subMenus' => array()
+
+	                );
+
+	                foreach($menus as $tempMenu){
+
+	                    if($tempMenu['idParent'] == $menu['id']){
+
+	                        $subMenu = array(
+
+	                            'id' => $tempMenu['id'],
+	                            'name' => $tempMenu['name'],
+	                            'target' => $tempMenu['target']
+
+	                        );
+
+	                        array_push($structuredMenu['subMenus'], $subMenu);
+
+	                    }   
+
+	                }
+
+	                array_push($parentMenus, $structuredMenu);
+
+	            } else {                    //Si no tiene submenus se agrega directamente
+
+	                if($menu['idParent'] == '0' || isset($menu['idParent']) == false){ //Verificamos que no tenga nodo padre para no repetir el menu
+
+	                    $structuredMenu = array(
+
+	                        'id' => $menu['id'],
+	                        'name' => $menu['name'],
+	                        'target' => $menu['target'],
+	                        'subMenus' => array()
+
+	                    );
+
+	                    array_push($parentMenus, $structuredMenu);
+
+	                }
+
+
+	            }
+
+	        }
+
+	        return $parentMenus;
+
+	    }
+
+	    /**
+	    *
+	    * Funcion para convertir un menu a formato html para privilegios
+	    * @param Array menu
+	    * @return strin htmlMenu
+	    *
+	    */
+
+	    static function menuToHtml($menu){
+
+	    	$htmlMenu = "";
+
+	    	if(count($menu['subMenus']) > 0){		//Verificamos si tiene submenus
+
+	    		$htmlMenu .= "";
+
+	    		$subMenusTable = ""
+	    				. "<tr> <td colspan='3'>" . $menu['name'] . "</td>"
+	    				. ""
+	    				. ""
+	    				. ""
+	    				. ""
+	    				. ""
+	    				. "";
+
+	    		foreach ($menu['subMenus'] as $subMenu) {
+	    			
+	    			$row = "<tr>"
+	    				
+		    				. "<td>" . $subMenu['name'] . "</td>"
+		    				
+		    				. "<td class='text-center'> <input type='hidden' value='1' id='menuRead" . $subMenu['id'] . "' name='menuRead" . $subMenu['id'] . "'> <input type='checkbox' id='" . $subMenu['id'] . "' class='menuReadCheck' checked> Lectura </td>"
+
+		    				. "<td class='text-center'> <input type='hidden' value='1' id='menuWrite" . $subMenu['id'] . "' name='menuWrite" . $subMenu['id'] . "'> <input type='checkbox' id='" . $subMenu['id'] . "' class='menuWriteCheck' checked> Escritura </td>"
+		    				
+	    				. "</tr>";
+
+	    			$subMenusTable .= $row;
+
+	    		}
+
+	    		$htmlMenu .= $subMenusTable;
+
+	    	} else {								//Si no tiene agregamos como un menu padre
+
+	    		$htmlMenu .= ""
+	    				. "<tr> <td>" . $menu['name'] . "</td>"
+	    				. "<td class='text-center'> <input type='hidden' value='1' id='menuRead" . $menu['id'] . "' name='menuRead" . $menu['id'] . "'> <input type='checkbox' id='" . $menu['id'] . "' class='menuReadCheck' checked> Lectura </td>"
+	    				. "<td class='text-center'> <input type='hidden' value='1' id='menuWrite" . $menu['id'] . "' name='menuWrite" . $menu['id'] . "'> <input type='checkbox' id='" . $menu['id'] . "' class='menuWriteCheck' checked> Escritura </td>"
+	    				. "</tr>";
+
+	    	}
+
+	    	return $htmlMenu;
+
+	    }
 
 		/*
 		* Funcion que registra la modificacion de una tabla

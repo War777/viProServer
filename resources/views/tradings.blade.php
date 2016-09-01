@@ -1,3 +1,9 @@
+<?
+
+	use App\Own\Own;
+
+?>
+
 @extends('layout')
 
 @section('title')
@@ -13,93 +19,66 @@
 		Giros comerciales
 	</h1>
 	
-	@if(isset($message))
+	{{ Own::printHtmlFeedback($message, $class) }}
+
+	<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
 		
-		<div class="alert {{ $class }} alert-dismissible" role="alert">
-
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-
-			<strong>
-
-				{{ $message }}
-				
-			</strong> 
-
-		</div>
-		
-	@endif
-
-
-	<div class="row">
-		
-		<div class="col-sm-offset-4 col-sm-4 text-center">
+		<div class="modal-dialog" role="document">
 			
-			<legend>
-				Agregar
-			</legend>
-
-			<form action="addTrading" method="post">
+			<div class="modal-content">
 				
-				<input type="text" name="description" class="form-control" placeholder="Giro">
+				<form action="addTrading" method="post">
 
-				<br>
-
-				<input type="reset" value="Cancelar" class="btn btn-danger">
-
-				<input type="submit" value="Agregar" class="btn btn-primary">
+					{{ csrf_field() }}
 				
-				{{ csrf_field() }}
-
-			</form>
-
-		</div>
-
-	</div>
-
-	<div class="row">
-		
-		<div class="col-sm-12">
-			
-			@if(count($tradings) > 0)
-					
-				<table class="table table-bordered table-striped table-hover table-condensed">
-
-					<thead>
-						<td>Id</td>
-						<td>Descripci&oacute;n</td>
-						<td>F. Creacion</td>
-						<td>U. Modificaci&oacute;n</td>
-						<td>F. Eliminaci&oacute;n</td>
-					</thead>
-
-					<tbody>
-						
-						@foreach($tradings as $trading)
+					<div class="modal-body">
 							
-							<tr>
-								
-								<td> {{ $trading['id'] }} </td>
-								<td> {{ $trading['description'] }} </td>
-								<td> {{ $trading['created_at'] }} </td>
-								<td> {{ $trading['updated_at'] }} </td>
-								<td> {{ $trading['deleted_at'] }} </td>
+						<h4>Giro</h4>
 
-							</tr>
-
-						@endforeach
+						<hr>
 						
-					</tbody>
+						<input type="text" name="description" class="form-control" placeholder="Giro">
+						
+						<div class="row">
+							
+							<div class="col-sm-12 text-right">
+								
+								<button type="button" class="btn btn-danger" data-dismiss="modal">
+									<i class="glyphicon glyphicon-remove"></i>
+									Cancelar
+								</button>
 
-				</table>
+								<button type="submit" value="Agregar" class="btn btn-primary">
+									<i class="glyphicon glyphicon-plus"></i>
+									Agregar
+								</button>
 
-			@else
+							</div>
 
-				<h3>Sin giros comerciales</h3>
+						</div>
 
-			@endif
+					</div>
 
-		</div>
+				</form>
+			
+			</div><!-- /.modal-content -->
+		
+		</div><!-- /.modal-dialog -->
+	
+	</div><!-- /.modal -->
 
-	</div>
+	<br>
+
+
+	<button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+		<i class="glyphicon glyphicon-plus"></i>
+	</button>
+
+	<br>
+	<br>
+
+	<? echo Own::arrayToTable($tradings, '', 'deleteTrading', ['route' => '', 'glyphicon' => '', 'label' => '']); ?>
+
+	
 
 @stop

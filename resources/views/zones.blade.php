@@ -1,3 +1,9 @@
+<?
+
+	use App\Own\Own;
+
+?>
+
 @extends('layout')
 
 @section('title')
@@ -9,77 +15,65 @@
 @section('content')
 	
 	<h1>Zonas</h1>
-
-	<div class="row">
-		
-		<div class="col-sm-offset-4 col-sm-4 text-center">
-			
-			<form action="addZone" method="post">
-				
-				{{ csrf_field() }}
-
-				<input type="text" name="description" class="form-control" placeholder="Descripci&oacute;n" required>
-				<br>
-				<input type="reset" value="Cancelar" class="btn btn-danger">
-
-				<input type="submit" value="Agregar" class="btn btn-primary">
-
-			</form>
-
-		</div>
-		
-	</div>
-
-		<div class="row">
-			
-			<br>
-
-			<div class="col-sm-12">
-				
-				@if(count($zones) > 0)
-					
-					<table class="table table-bordered table-striped table-hover table-condensed">
-
-						<thead>
-							<td>Id</td>
-							<td>Descripci&oacute;n</td>
-							<td>F. Creacion</td>
-							<td>U. Modificaci&oacute;n</td>
-							<td>F. Eliminaci&oacute;n</td>
-						</thead>
-
-						<tbody>
-							
-							@foreach($zones as $zone)
-								
-								<tr>
-									
-									<td> {{ $zone['id'] }} </td>
-									<td> {{ $zone['description'] }} </td>
-									<td> {{ $zone['created_at'] }} </td>
-									<td> {{ $zone['updated_at'] }} </td>
-									<td> {{ $zone['deleted_at'] }} </td>
-
-								</tr>
-
-							@endforeach
-							
-						</tbody>
-
-					</table>
 	
-				@else
+	{{ Own::printHtmlFeedback($message, $class) }}
 
-					<h3>Sin zonas</h3>
 
-				@endif
-
+	<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+		
+		<div class="modal-dialog" role="document">
+			
+			<div class="modal-content">
 				
+				<form action="addZone" method="post">
 
-			</div>
+					<div class="modal-body">
+							
+						<h4 class="modal-title">Zona</h4>
 
-		</div>
+						<hr>
+						
+						{{ csrf_field() }}
 
-	</div>
+						<input type="text" name="description" class="form-control" placeholder="Descripci&oacute;n" required>
+							
+						<div class="row">
+							
+							<div class="col-sm-12 text-right">
+								
+								<button type="button" class="btn btn-danger" data-dismiss="modal">
+									<i class="glyphicon glyphicon-remove"></i>
+									Cancelar
+								</button>
+
+								<button type="submit" value="Agregar" class="btn btn-primary">
+									<i class="glyphicon glyphicon-plus"></i>
+									Agregar
+								</button>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</form>
+			
+			</div><!-- /.modal-content -->
+		
+		</div><!-- /.modal-dialog -->
+	
+	</div><!-- /.modal -->
+
+	<button type="button" class="btn btn-primary btn-xs pull-right" data-toggle="modal" data-target="#myModal">
+		<i class="glyphicon glyphicon-plus"></i>
+	</button>
+
+	<br>
+	<br>
+
+	<? 
+		echo Own::arrayToTable($zones, '', 'deleteZone', ['route'=>'','glyphicon'=>'','label'=>'']); 
+	?>
 
 @stop
