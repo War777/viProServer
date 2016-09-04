@@ -46,7 +46,8 @@ class TradingsController extends Controller
             description as 'Descripcion', 
             created_at as 'F. Creacion .tc' 
             FROM tradings
-            WHERE deleted_at IS NULL;";
+            WHERE deleted_at IS NULL
+            ORDER BY description;";
 
     	$tradings = Own::queryToArray($query);
 
@@ -66,9 +67,9 @@ class TradingsController extends Controller
 
     	$inputs = $request->toArray();					//Obtenemos los datos del formulario
 
-    	$trading = new Trading;
+    	$trading = Trading::withTrashed()->firstOrNew(['description'=> $inputs['description']]);
 
-    	$trading->description = $inputs['description'];
+    	$trading->deleted_at = null;
 
     	$message = '';
     	$class = '';

@@ -18,6 +18,8 @@
 		Agregar comerciante
 	</h1>
 	
+	{{ Own::printHtmlFeedback($message, $class) }}
+
 	<form action="addMerchantWithReceipt" method="post" class="validate">
 
 		{{ csrf_field() }}
@@ -28,13 +30,13 @@
 				
 				<legend>Datos del titular</legend>
 
-				<input type="text" name="firstName" class="form-control" placeholder="Apellido paterno" required  value="">
+				<input type="text" name="firstName" class="form-control" placeholder="Apellido paterno" required  value="{{ isset($inputs['firstName']) ? $inputs['firstName'] : '' }}">
 
-				<input type="text" name="lastName" class="form-control" placeholder="Apellido materno" required  value="">
+				<input type="text" name="lastName" class="form-control" placeholder="Apellido materno" required  value="{{ isset($inputs['lastName']) ? $inputs['lastName'] : '' }}">
 
-				<input type="text" name="names" class="form-control" placeholder="Nombre(s)" required value="">
+				<input type="text" name="names" class="form-control" placeholder="Nombre(s)" required value="{{ isset($inputs['names']) ? $inputs['names'] : '' }}">
 
-				<input type="text" name="phone" class="form-control numeric" placeholder="Telefono" required value="">
+				<input type="text" name="phone" class="form-control numeric" placeholder="Telefono" required value="{{ isset($inputs['phone']) ? $inputs['phone'] : '' }}">
 
 				{{ Own::arrayToDropdown('Local', 'isLocal', $localValues) }}
 				<br>
@@ -51,11 +53,11 @@
 					Recibo 2015
 				</legend>
 
-				<input type="text" id="lastMeters" name="lastMeters" class="form-control numeric chargeInput" placeholder="Metros" required value="">
+				<input type="text" id="lastMeters" name="lastMeters" class="form-control numeric chargeInput" placeholder="Metros" required value="{{ isset($inputs['lastMeters']) ? $inputs['lastMeters'] : '' }}">
 
-				<input type="text" id="lastCharge" name="lastMetersCharge" class="form-control numeric chargeInput" placeholder="Costo" required value="">
+				<input type="text" id="lastCharge" name="lastMetersCharge" class="form-control numeric chargeInput" placeholder="Costo" required value="{{ isset($inputs['lastMetersCharge']) ? $inputs['lastMetersCharge'] : '' }}">
 
-				<input type="text" id="lastCharge" name="lastLightCharge" class="form-control numeric chargeInput" placeholder="Costo CFE" required value="">
+				<input type="text" id="lastCharge" name="lastLightCharge" class="form-control numeric chargeInput" placeholder="Costo CFE" required value="{{ isset($inputs['lastLightCharge']) ? $inputs['lastLightCharge'] : '' }}">
 
 				<h4 class="pull-right">
 					<input type="hidden" id="lastMeterCharge" name="lastMeterCharge">
@@ -63,7 +65,9 @@
 						
 					</div>
 				</h4>
-				<textarea name="notes" class="form-control" cols="20" rows="4" placeholder="Notas"></textarea>
+				<textarea name="notes" class="form-control" cols="20" rows="4" placeholder="Notas">
+					{{ isset($inputs['notes']) ? $inputs['notes'] : '' }}
+				</textarea>
 
 			</div>
 
@@ -73,11 +77,11 @@
 					Recibo 2016
 				</legend>
 
-				<input type="text" id="frontLength" name="frontLength" class="form-control numeric chargeInput" placeholder="Metros de frente" required value="">
+				<input type="text" id="frontLength" name="frontLength" class="form-control numeric chargeInput" placeholder="Metros de frente" required value="{{ isset($inputs['frontLength']) ? $inputs['frontLength'] : '' }}">
 
-				<input type="text" id="wideLength" name="wideLength" class="form-control numeric chargeInput" placeholder="Metros de largo" required value="">
+				<input type="text" id="wideLength" name="wideLength" class="form-control numeric chargeInput" placeholder="Metros de largo" required value="{{ isset($inputs['wideLength']) ? $inputs['wideLength'] : '' }}">
 
-				<input type="text" id="spotLightsOral" name="lightsOral" class="form-control numeric chargeInput" placeholder="Focos" required value="">
+				<input type="text" id="spotLightsOral" name="lightsOral" class="form-control numeric chargeInput" placeholder="Focos" required value="{{ isset($inputs['lightsOral']) ? $inputs['lightsOral'] : '' }}">
 
 				<input type="hidden" id="lightCost" name="lightCharge" value="{{ $lightCharge }}">
 

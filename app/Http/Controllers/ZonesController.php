@@ -56,7 +56,8 @@ use DB;
 	   			created_at as 'Creacion .tc',
 	   			updated_at as 'U. Actualizacion .tc'
 	   			FROM zones
-	   			WHERE deleted_at is null;
+	   			WHERE deleted_at is null
+	   			ORDER BY description;
    			";
 
 	   		$zones = Own::queryToArray($queryZones);

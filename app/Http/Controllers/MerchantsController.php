@@ -152,6 +152,30 @@ class MerchantsController extends Controller
 
 		$inputs = $request->toArray();
 
+		// $merchant = Own::queryToSingleArray("select * from merchants where phone = " . $inputs['phone']);
+		
+		// if(isset($merchant)){
+
+			// $data = array(
+
+			// 	'inputs' => $inputs,
+			// 	'message' => 'Comerciante ya existente, favor de intentar con otro numero de telefono',
+			// 	'class' => 'bg-danger',
+			// 	'inputs' => $inputs,
+			// 	'localValues' => $this->getLocalValues(),
+			// 	'tradingsValues' => $this->getTradingsArray(),
+			// 	'zonesValues' => $this->getZonesArray(),
+			// 	'incomeValues' => $this->getIncomeValues(),
+			// 	'lightCharge' => $this->getLightCharge(),
+			// 	'currentIncrease' => $this->getCurrentIncrease(),
+
+			// );
+
+			// return view('addReceiptMerchant', $data);
+
+		// }
+
+
 		$merchant = $this->firstOrNewMerchant($inputs);
 
 		$lastChargeAttributes = array(
@@ -475,7 +499,9 @@ class MerchantsController extends Controller
 			'zonesValues' => $zonesValues,
 			'incomeValues' => $incomeValues,
 			'lightCharge' => $lightCharge,
-			'currentIncrease' => $currentIncrease
+			'currentIncrease' => $currentIncrease,
+			'message' => '',
+			'class' => ''
 
 		);
 		
@@ -736,7 +762,9 @@ class MerchantsController extends Controller
 				'tradingDescription' => $tradingDescription,
 				'zonesValues' => $this->getZonesArray(),
 				'lightCharge' => $lightCharge,
-				'currentIncrease' => $currentIncrease
+				'currentIncrease' => $currentIncrease,
+				'message' => '',
+				'class' => 'bg-danger'
 			);
 
 			return view('addReceiptCharge', $data);
@@ -882,6 +910,163 @@ class MerchantsController extends Controller
 		return $this->displayMerchantCharges($request);			//Retornamos la vista
 
 	}
+
+	/**
+	*
+	* Funcion para mostrar el resumen
+	* @return View
+	*
+	*/
+
+	public function displayIncomeResume(){
+
+		$queryTradingResume = "
+			
+			SELECT '<b>Total</b>', sum(totalCharge) as '\$\$\$Monto'
+			FROM charges
+			WHERE year = '2016'
+
+			UNION ALL
+
+			SELECT t.description as 'Giro comercial', sum(c.totalCharge) as '\$\$\$Monto'
+			from charges c
+			join merchants m
+			join tradings t
+			on c.idMerchant = m.id
+			and m.idTrading = t.id
+			and c.year = '2016'
+			group by t.description
+			order by \$\$\$Monto";
+
+		$tradingResume = Own::queryToArray($queryTradingResume);
+
+		$queryLocalResume = "
+			
+			SELECT '<b>Total</b>', sum(totalCharge) as '\$\$\$Monto'
+			FROM charges
+			WHERE year = '2016'
+
+			UNION ALL
+
+			SELECT 
+				case m.isLocal when m.isLocal = '1' THEN 'Villa Progreso' ELSE 'Externo' end, 
+				sum(c.totalCharge) as '\$\$\$Monto'
+			from charges c
+			join merchants m
+			on c.idMerchant = m.id
+			and c.year = '2016'
+			group by m.isLocal
+			order by \$\$\$Monto";
+
+		$localResume = Own::queryToArray($queryLocalResume);
+
+		$queryZoneResume = "
+
+			SELECT '<b>Total</b>', sum(totalCharge) as '\$\$\$Monto'
+			FROM charges
+			WHERE year = '2016'
+
+			UNION ALL
+
+			select z.description as 'Giro comercial', sum(c.totalCharge) as '\$\$\$Monto'
+			from charges c
+			join zones z
+			on c.idZone = z.id
+			and c.year = '2016'
+			group by z.description
+			order by \$\$\$Monto";
+
+		$zonesResume = Own::queryToArray($queryZoneResume);
+
+		$data = array(
+
+			'tradingResume' => $tradingResume,
+			'zonesResume' => $zonesResume,
+			'localResume' => $localResume
+
+		);
+
+		return view('incomeResume', $data);
+
+	}
+
+	/**
+	*
+	* Funcion para regresar los valores booleanos
+	*
+	*/
+
+	public function getLocalValues(){
+
+		$localValues = array(
+
+			['value' => '1', 'label' => 'Si'],
+			['value' => '0', 'label' => 'No'],
+
+		);
+
+	}
+
+	/**
+	*
+	* Funcion para regresar los valores del tipo de entrada
+	* @return Array
+	*
+	*/
+
+	public function getIncomeValues(){
+
+		$incomeValues = array(
+			['value' => 'Variable', 'label' => 'Variable'],
+			['value' => 'Fijo', 'label' => 'Fijo'],
+		);
+
+		return $incomeValues;
+
+	}
+
+	/**
+	*
+	* Funcion para regresar los valores del tipo de entrada
+	* @return Array
+	*
+	*/
+
+	public function getLightCharge(){
+
+		$queryLightCost = "select value
+			from variables
+			where name = 'perLightCost';";
+
+		$lightCharge = Own::queryToData($queryLightCost);
+
+		return $lightCharge;
+
+	}
+
+	/**
+	*
+	* Funcion para regresar el incremento de tarifa
+	* @return Array
+	*
+	*/
+
+	public function getCurrentIncrease(){
+
+		$queryCurrentIncrease = "select value
+			from variables
+			where name = 'currentIncrease';";
+
+		$currentIncrease = Own::queryToData($queryCurrentIncrease);
+
+		return $currentIncrease;
+
+	}
+
+
+	
+
+
 
 
 }

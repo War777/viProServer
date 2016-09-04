@@ -36,11 +36,11 @@ class RatesController extends Controller
 
 	public function displayRates($message, $class){
 
-		$tradingsQuery = 'select id as value, description as label from tradings where deleted_at is null;';
+		$tradingsQuery = 'select id as value, description as label from tradings where deleted_at is null order by description;';
 
 		$tradings = Own::queryToArray($tradingsQuery);
 
-		$zonesQuery = 'select id as value, description as label from zones where deleted_at is null;';
+		$zonesQuery = 'select id as value, description as label from zones where deleted_at is null order by description;';
 
 		$zones = Own::queryToArray($zonesQuery);
 

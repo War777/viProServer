@@ -129,8 +129,8 @@ h4 {
 		<td><b>Telefono</b></td>
 		<td>{{ $merchant->phone }}</td>
 
-		<td><b>Focos</b></td>
-		<td align="right">{{ $charge->lightsOral }}</td>
+		<td><b></b></td>
+		<td align="right"></td>
 
 	
 	</tr>
@@ -256,8 +256,8 @@ h4 {
 		<td><b>Telefono</b></td>
 		<td>{{ $merchant->phone }}</td>
 
-		<td><b>Focos</b></td>
-		<td align="right">{{ $charge->lightsOral }}</td>
+		<td><b></b></td>
+		<td align="right"></td>
 
 	
 	</tr>

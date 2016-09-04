@@ -155,9 +155,11 @@ use DB;
 							$cellClasses = " text-right";
 							$header = str_replace("+", "", $header);
 							if($firstCell == true){ $tableRow = str_replace(">", " id='" . $value . "'>", $tableRow); }
-							$header = str_replace("-", "", $header);
+								$header = str_replace("-", "", $header);
 
 							$id = $value;
+
+							$value = str_pad($value, 4, "0", STR_PAD_LEFT);
 
 						} else if(Own::contains($header, "#", false) == true){	//Es numerico
 							
@@ -196,8 +198,6 @@ use DB;
 							$cellClasses .= " text-center";
 
 						}
-
-
 
 						if($firstRow == true){
 

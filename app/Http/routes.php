@@ -176,3 +176,5 @@ Route::get('login', 'Auth\AuthController@displayLogin');
 Route::get('logout', 'Auth\AuthController@logout');
 
 Route::post('checkLogin', 'Auth\AuthController@checkLogin');
+
+Route::get('incomeResume', 'MerchantsController@displayIncomeResume');
