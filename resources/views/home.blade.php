@@ -11,7 +11,7 @@
 @stop
 
 @section('h1')
-	Bienvenid@ GO {{ Auth::user()->names }}
+	Bienvenid@ GO Fagget {{ Auth::user()->names }}
 @stop
 
 @section('content')
