@@ -11,7 +11,7 @@
 @stop
 
 @section('h1')
-	Bienvenid@ Yaniviendo {{ Auth::user()->names }}
+	Bienvenid@ {{ Auth::user()->names }}
 @stop
 
 @section('content')
