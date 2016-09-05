@@ -16,19 +16,22 @@
 
 @section('content')
 		
-	{{ Own::printHtmlFeedback($message, $class) }}
 
 	<style>
+
 		input[type=file] {
 
 			display: none;
 
 		}
+		
 	</style>
 
 	<h1>
 		Comerciantes
 	</h1>
+
+	{{ Own::printHtmlFeedback($message, $class) }}
 
 <!-- 	<div class="row">
 		

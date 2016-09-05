@@ -197,6 +197,11 @@ use DB;
 							$header = str_replace(".tc", "", $header);
 							$cellClasses .= " text-center";
 
+						} else if(Own::contains($header, ".tr", false) == true){
+
+							$header = str_replace(".tr", "", $header);
+							$cellClasses .= " text-right";
+
 						}
 
 						if($firstRow == true){
@@ -255,7 +260,7 @@ use DB;
 				$tableHeaders .= "</thead>";
 
 				$table = "<div class='table-responsive'>"
-							. "<table class='table table-bordered table-hover table-condensed editable' updateRoute='" . $updateFunction . "' deleteRoute='" . $deleteFunction . "' specialRoute='" . $specialRoute['route'] . "' specialRouteLabel='" . $specialRoute['label'] . "' >" 
+							. "<table class='table table-bordered table-hover table-condensed editable table-striped' updateRoute='" . $updateFunction . "' deleteRoute='" . $deleteFunction . "' specialRoute='" . $specialRoute['route'] . "' specialRouteLabel='" . $specialRoute['label'] . "' >" 
 								. $tableHeaders
 								. $tableBody 
 							. "</table>"

@@ -18,6 +18,7 @@ class CreateTableCharges extends Migration
 
             $table->increments('id');
             $table->integer('idMerchant');
+            $table->integer('idTrading');
             $table->integer('idZone');
             $table->integer('year');
 

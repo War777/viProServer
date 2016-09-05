@@ -49,11 +49,6 @@
 					<td>{{ $merchant->incomeType }}</td>
 				</tr>
 
-				<tr>
-					<td><b>Giro</b></td>
-					<td>{{ $tradingDescription }}</td>
-				</tr>
-
 			</table>
 
 		</div>

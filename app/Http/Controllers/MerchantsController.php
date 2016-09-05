@@ -38,7 +38,7 @@ class MerchantsController extends Controller
 			    m.lastName as 'A. Materno', 
 			    m.names as 'Nombre(s)', 
 			    m.isLocal as '!Es local', 
-			    m.phone as 'Telefono', 
+			    m.phone as 'Telefono .tr', 
 			    t.description as 'Giro',
 			    m.incomeType as 'Ingreso', 
 			    m.created_at as 'F. Creacion .tc'
@@ -151,52 +151,51 @@ class MerchantsController extends Controller
 		$class = '';
 
 		$inputs = $request->toArray();
-
-		// $merchant = Own::queryToSingleArray("select * from merchants where phone = " . $inputs['phone']);
 		
-		// if(isset($merchant)){
+		$merchantExists = Own::queryToSingleArray("select * from merchants where phone = " . $inputs['phone'] . " and deleted_at is null");
+		
+		if(isset($merchantExists['phone'])){
 
-			// $data = array(
+			$data = array(
 
-			// 	'inputs' => $inputs,
-			// 	'message' => 'Comerciante ya existente, favor de intentar con otro numero de telefono',
-			// 	'class' => 'bg-danger',
-			// 	'inputs' => $inputs,
-			// 	'localValues' => $this->getLocalValues(),
-			// 	'tradingsValues' => $this->getTradingsArray(),
-			// 	'zonesValues' => $this->getZonesArray(),
-			// 	'incomeValues' => $this->getIncomeValues(),
-			// 	'lightCharge' => $this->getLightCharge(),
-			// 	'currentIncrease' => $this->getCurrentIncrease(),
+				'inputs' => $inputs,
+				'message' => 'Comerciante ya existente, favor de intentar con otro numero de telefono',
+				'class' => 'bg-danger',
+				'inputs' => $inputs,
+				'localValues' => $this->getLocalValues(),
+				'tradingsValues' => $this->getTradingsArray(),
+				'zonesValues' => $this->getZonesArray(),
+				'incomeValues' => $this->getIncomeValues(),
+				'lightCharge' => $this->getLightCharge(),
+				'currentIncrease' => $this->getCurrentIncrease(),
 
-			// );
+			);
 
-			// return view('addReceiptMerchant', $data);
+			return view('addReceiptMerchant', $data);
 
-		// }
-
+		}
 
 		$merchant = $this->firstOrNewMerchant($inputs);
 
-		$lastChargeAttributes = array(
-			'idMerchant' => $merchant->id,
-			'idZone' => $inputs['idZone'],
-			'year' => '2015',
-			'frontLength' => $inputs['frontLength'],
-			'wideLength' => $inputs['lastMeters'],
-			'lightsOral' => $inputs['lightsOral'],
-			'lightsReal' => $inputs['lightsOral'],
-			'meterCharge' => $inputs['lastMeterCharge'],
-			'metersCharge' => $inputs['lastMetersCharge'],
-			'lightCharge' => $inputs['lightCharge'],
-			'lightsCharge' => $inputs['lastLightCharge'],
-			'totalCharge' =>  $inputs['lastMetersCharge'] + $inputs['lastLightCharge'],
-			'isChecked' => '0',
-			'score' => '5',
-			'notes' => $inputs['notes']
-		);
+		// $lastChargeAttributes = array(
+		// 	'idMerchant' => $merchant->id,
+		// 	'idZone' => $inputs['idZone'],
+		// 	'year' => '2015',
+		// 	'frontLength' => $inputs['frontLength'],
+		// 	'wideLength' => $inputs['lastMeters'],
+		// 	'lightsOral' => $inputs['lightsOral'],
+		// 	'lightsReal' => $inputs['lightsOral'],
+		// 	'meterCharge' => $inputs['lastMeterCharge'],
+		// 	'metersCharge' => $inputs['lastMetersCharge'],
+		// 	'lightCharge' => $inputs['lightCharge'],
+		// 	'lightsCharge' => $inputs['lastLightCharge'],
+		// 	'totalCharge' =>  $inputs['lastMetersCharge'] + $inputs['lastLightCharge'],
+		// 	'isChecked' => '0',
+		// 	'score' => '5',
+		// 	'notes' => $inputs['notes']
+		// );
 		
-		$lastCharge = $this->firstOrNewCharge($lastChargeAttributes);
+		// $lastCharge = $this->firstOrNewCharge($lastChargeAttributes);
 
 		$chargeAttributes = array(
 			'idMerchant' => $merchant->id,
@@ -269,6 +268,7 @@ class MerchantsController extends Controller
 			]
 		);
 
+		$charge->idTrading = $attributes['idZone'];
 		$charge->idZone = $attributes['idZone'];
 		$charge->frontLength = $attributes['frontLength'];
 		$charge->wideLength = $attributes['wideLength'];
@@ -303,28 +303,11 @@ class MerchantsController extends Controller
 
 		$inputs = $request->toArray();
 
-		$lastChargeAttributes = array(
-			'idMerchant' => $inputs['idMerchant'],
-			'idZone' => $inputs['idZone'],
-			'year' => '2015',
-			'frontLength' => $inputs['frontLength'],
-			'wideLength' => $inputs['lastMeters'],
-			'lightsOral' => $inputs['lightsOral'],
-			'lightsReal' => $inputs['lightsOral'],
-			'meterCharge' => $inputs['lastMeterCharge'],
-			'metersCharge' => $inputs['lastMetersCharge'],
-			'lightCharge' => $inputs['lightCharge'],
-			'lightsCharge' => $inputs['lastLightCharge'],
-			'totalCharge' =>  $inputs['lastMetersCharge'] + $inputs['lastLightCharge'],
-			'isChecked' => '0',
-			'score' => '5',
-			'notes' => $inputs['notes']
-		);
-		
-		$lastCharge = $this->firstOrNewCharge($lastChargeAttributes);
+		$charge = new Charge;
 
 		$chargeAttributes = array(
 			'idMerchant' => $inputs['idMerchant'],
+			'idTrading' => $inputs['idTrading'],
 			'idZone' => $inputs['idZone'],
 			'year' => date('Y'),
 			'frontLength' => $inputs['frontLength'],
@@ -341,7 +324,7 @@ class MerchantsController extends Controller
 			'notes' => $inputs['notes']
 		);
 
-		$charge = $this->firstOrNewCharge($chargeAttributes);
+		$charge = $this->addCharge($chargeAttributes);
 
 		$request['id'] = $inputs['idMerchant'];
 		$request['message'] = 'Cargo agregado con exito!';
@@ -380,8 +363,6 @@ class MerchantsController extends Controller
 
 		$merchant = Merchant::find($inputs['id']);
 
-		$tradingDescription = Own::queryToData('select description from tradings where id =' . $merchant->idTrading . ';');
-
 		$queryCharges = "SELECT 
 			c.id as '+id',
 			c.year as 'A&ntilde;o .tc',
@@ -409,7 +390,6 @@ class MerchantsController extends Controller
 
 		$data = array(
 			'merchant' => $merchant,
-			'tradingDescription' => $tradingDescription,
 			'charges' => $charges,
 			'message' => $message,
 			'class' => $class
@@ -528,10 +508,6 @@ class MerchantsController extends Controller
 
 		);
 
-		$tradingsValues = $this->getTradingsArray();
-
-		$zonesValues = $this->getZonesArray();
-
 		$incomeValues = array(
 			['value' => 'Variable', 'label' => 'Variable'],
 			['value' => 'Fijo', 'label' => 'Fijo'],
@@ -550,10 +526,11 @@ class MerchantsController extends Controller
 		$currentIncrease = Own::queryToData($queryCurrentIncrease);
 
 		$data = array(
-
+			'message' => '',
+			'class' => '',
 			'localValues' => $localValues,
-			'tradingsValues' => $tradingsValues,
-			'zonesValues' => $zonesValues,
+			'tradingsValues' => $this->getTradingsArray(),
+			'zonesValues' => $this->getZonesArray(),
 			'incomeValues' => $incomeValues,
 			'lightCharge' => $lightCharge,
 			'currentIncrease' => $currentIncrease
@@ -576,6 +553,29 @@ class MerchantsController extends Controller
 	public function addNewMerchant(Request $request){
 
 		$inputs = $request->toArray();
+
+		$merchantExists = Own::queryToSingleArray("select * from merchants where phone = " . $inputs['phone'] . " and deleted_at is null");
+		
+		if(isset($merchantExists['phone'])){
+
+			$data = array(
+
+				'inputs' => $inputs,
+				'message' => 'Comerciante ya existente, favor de intentar con otro numero de telefono',
+				'class' => 'bg-danger',
+				'inputs' => $inputs,
+				'localValues' => $this->getLocalValues(),
+				'tradingsValues' => $this->getTradingsArray(),
+				'zonesValues' => $this->getZonesArray(),
+				'incomeValues' => $this->getIncomeValues(),
+				'lightCharge' => $this->getLightCharge(),
+				'currentIncrease' => $this->getCurrentIncrease(),
+
+			);
+
+			return view('addNewMerchant', $data);
+
+		}
 
 		$merchant = $this->firstOrNewMerchant($inputs);
 
@@ -743,8 +743,6 @@ class MerchantsController extends Controller
 
 			$merchant = Merchant::find($inputs['idMerchant']);
 
-			$tradingDescription = Own::queryToData('select description from tradings where id =' . $merchant->idTrading . ';');
-
 			$queryLightCost = "select value
 				from variables
 				where name = 'perLightCost';";
@@ -759,7 +757,7 @@ class MerchantsController extends Controller
 
 			$data = array(
 				'merchant' => $merchant,
-				'tradingDescription' => $tradingDescription,
+				'tradingsValues' => $this->getTradingsArray(),
 				'zonesValues' => $this->getZonesArray(),
 				'lightCharge' => $lightCharge,
 				'currentIncrease' => $currentIncrease,
@@ -797,8 +795,6 @@ class MerchantsController extends Controller
 
 			$merchant = Merchant::find($inputs['idMerchant']);
 
-			$tradingDescription = Own::queryToData('select description from tradings where id =' . $merchant->idTrading . ';');
-
 			$queryLightCost = "select value
 				from variables
 				where name = 'perLightCost';";
@@ -813,7 +809,8 @@ class MerchantsController extends Controller
 
 			$data = array(
 				'merchant' => $merchant,
-				'tradingDescription' => $tradingDescription,
+				'tradingDescription' => $this->getTradingsArray(),
+				'tradingsValues' => $this->getTradingsArray(),
 				'zonesValues' => $this->getZonesArray(),
 				'lightCharge' => $lightCharge,
 				'currentIncrease' => $currentIncrease
@@ -843,6 +840,7 @@ class MerchantsController extends Controller
 
 		$chargeAttributes = array(
 			'idMerchant' => $inputs['idMerchant'],
+			'idTrading' => $inputs['idTrading'],
 			'idZone' => $inputs['idZone'],
 			'year' => date('Y'),
 			'frontLength' => $inputs['frontLength'],
@@ -859,7 +857,7 @@ class MerchantsController extends Controller
 			'notes' => $inputs['notes']
 		);
 
-		$charge = $this->firstOrNewCharge($chargeAttributes);
+		$charge = $this->addCharge($chargeAttributes);
 
 		$request['id'] = $inputs['idMerchant'];
 		$request['message'] = 'Cargo agregado con exito!';
@@ -1005,6 +1003,8 @@ class MerchantsController extends Controller
 
 		);
 
+		return $localValues;
+
 	}
 
 	/**
@@ -1060,6 +1060,52 @@ class MerchantsController extends Controller
 		$currentIncrease = Own::queryToData($queryCurrentIncrease);
 
 		return $currentIncrease;
+
+	}
+
+	/**
+	*
+	* Funcion para agregar un cargo
+	* @param Array attributes
+	* @return View
+	*
+	*/
+
+	public function addCharge($attributes){
+
+		$charge = new Charge;
+
+		$charge->idMerchant = $attributes['idMerchant'];
+		$charge->idTrading = $attributes['idTrading'];
+		$charge->idZone = $attributes['idZone'];
+		$charge->year = $attributes['year'];
+
+		$charge->frontLength = $attributes['frontLength'];
+		$charge->wideLength = $attributes['wideLength'];
+
+		$charge->lightsOral = $attributes['lightsOral'];
+		$charge->lightsReal = $attributes['lightsReal'];
+
+		$charge->meterCharge = $attributes['meterCharge'];
+		$charge->metersCharge = $attributes['metersCharge'];
+
+		$charge->lightCharge = $attributes['lightCharge'];
+		$charge->lightsCharge = $attributes['lightsCharge'];
+
+		$charge->totalCharge = $attributes['totalCharge'];
+
+		$charge->isChecked = $attributes['isChecked'];
+
+		$charge->score = $attributes['score'];
+		$charge->notes = $attributes['notes'];
+
+		$charge->randomKey = str_replace(['/', '\\', '.'], "-", Hash::make(str_random(20)));
+
+		$charge->save();
+
+		$this->createQrCode($charge);
+
+		return $charge;
 
 	}
 

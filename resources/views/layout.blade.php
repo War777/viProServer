@@ -137,7 +137,7 @@
 		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:block;position:static;margin-bottom:5px;">
 			<li><a class="updateAnchor" tabindex="-1" href="#">Editar</a></li>
 			<li><a class="deleteAnchor" tabindex="-1" href="#">Eliminar</a></li>
-			<li><a class="specialAnchor" tabindex="-1" href="#"></a></li>
+			<li><a target="_blank" class="specialAnchor" tabindex="-1" href="#"></a></li>
 		</ul>
 	</div>
 

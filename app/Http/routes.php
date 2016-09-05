@@ -136,6 +136,12 @@ Route::group(['middleware' => 'auth'], function(){
 
 	Route::post('updateMerchant', 'MerchantsController@updateMerchant');
 
+	/**
+	*
+	* Rutas para los cargos
+	*
+	*/
+
 	Route::get('addReceiptCharge', 'MerchantsController@displayReceiptChargeBlade');
 
 	Route::post('addReceiptCharge', 'MerchantsController@addReceiptCharge');

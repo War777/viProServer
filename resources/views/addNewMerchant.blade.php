@@ -17,6 +17,8 @@
 	<h1>
 		Agregar comerciante
 	</h1>
+	
+	{{ Own::printHtmlFeedback($message, $class) }}
 
 		<form action="addNewMerchant" method="post">
 			
@@ -28,13 +30,13 @@
 					
 					<legend>Datos del titular</legend>
 
-					<input type="text" name="firstName" class="form-control" placeholder="Apellido paterno" required  value="">
+					<input type="text" name="firstName" class="form-control" placeholder="Apellido paterno" required  value="{{ isset($inputs['firstName']) ? $inputs['firstName'] : '' }}">
 
-					<input type="text" name="lastName" class="form-control" placeholder="Apellido materno" required  value="">
+					<input type="text" name="lastName" class="form-control" placeholder="Apellido materno" required  value="{{ isset($inputs['lastName']) ? $inputs['lastName'] : '' }}">
 
-					<input type="text" name="names" class="form-control" placeholder="Nombre(s)" required value="">
+					<input type="text" name="names" class="form-control" placeholder="Nombre(s)" required value="{{ isset($inputs['names']) ? $inputs['names'] : '' }}">
 
-					<input type="text" name="phone" class="form-control numeric" placeholder="Telefono" required value="">
+					<input type="text" name="phone" class="form-control numeric" placeholder="Telefono" required value="{{ isset($inputs['phone']) ? $inputs['phone'] : '' }}">
 
 					{{ Own::arrayToDropdown('Local', 'isLocal', $localValues) }}
 					<br>
@@ -50,19 +52,19 @@
 					
 					<legend>Recibo 2016</legend>
 
-					<input type="text" id="worFrontLength" name="frontLength" class="form-control numeric worChargeInput" placeholder="Metros de frente" required value="">
+					<input type="text" id="worFrontLength" name="frontLength" class="form-control numeric worChargeInput" placeholder="Metros de frente" required value="{{ isset($inputs['frontLength']) ? $inputs['frontLength'] : '' }}">
 
-					<input type="text" id="worWideLength" name="wideLength" class="form-control numeric worChargeInput" placeholder="Metros de largo" required value="">
+					<input type="text" id="worWideLength" name="wideLength" class="form-control numeric worChargeInput" placeholder="Metros de largo" required value="{{ isset($inputs['wideLength']) ? $inputs['wideLength'] : '' }}">
 
-					<input type="text" id="lightsOral" name="lightsOral" class="form-control numeric worChargeInput" placeholder="Focos" required value="">
+					<input type="text" id="lightsOral" name="lightsOral" class="form-control numeric worChargeInput" placeholder="Focos" required value="{{ isset($inputs['lightsOral']) ? $inputs['lightsOral'] : '' }}">
 
 					<input type="hidden" id="lightCharge" name="lightCharge" value="{{ $lightCharge }}">
 
 					<input type="hidden" id="currentIncrease" name="currentIncrease" value="{{ $currentIncrease }}">
 
-					<input type="hidden" id="meterCharge" name="meterCharge">
+					<input type="hidden" id="meterCharge" name="meterCharge" value="{{ isset($inputs['lastMeterCharge']) ? $inputs['lastMeterCharge'] : '' }}">
 
-					<textarea name="notes" class="form-control" id="" cols="10" rows=""></textarea>
+					<textarea name="notes" class="form-control" id="" cols="10" rows="">{{ isset($inputs['notes']) ? $inputs['notes'] : '' }}</textarea>
 
 					<br>
 

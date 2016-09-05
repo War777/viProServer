@@ -55,26 +55,21 @@
 							<td>{{ $merchant->incomeType }}</td>
 						</tr>
 
-						<tr>
-							<td><b>Giro</b></td>
-							<td>{{ $tradingDescription }}</td>
-						</tr>
-
 					</table>
 
 					<input type="hidden" name="idMerchant" value="{{ $merchant->id }}">
 		
 					<input type="hidden" name="isLocal" value="{{ $merchant->isLocal }}">
 					
-					<input type="hidden" name="idTrading" value="{{ $merchant->idTrading }}">
-
-					
-
 				</div>
 
 				<div class="col-sm-4">
 					
 					<legend>Recibo 2016</legend>
+					
+					{{ Own::arrayToDropdown('Giro', 'idTrading', $tradingsValues) }}
+
+					<br>
 
 					{{ Own::arrayToDropdown('Zona', 'idZone', $zonesValues) }}
 

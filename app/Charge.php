@@ -13,6 +13,7 @@ class Charge extends Model
 	protected $fillable = [
 
 		'idMerchant',
+		'idTrading',
 		'idZone',
 		'year',
 

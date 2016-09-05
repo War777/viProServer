@@ -60,14 +60,16 @@
 				<input type="text" id="lastCharge" name="lastLightCharge" class="form-control numeric chargeInput" placeholder="Costo CFE" required value="{{ isset($inputs['lastLightCharge']) ? $inputs['lastLightCharge'] : '' }}">
 
 				<h4 class="pull-right">
-					<input type="hidden" id="lastMeterCharge" name="lastMeterCharge">
-					<div id="lastMeterChargeLabel">
+					<input type="hidden" id="lastMeterCharge" name="lastMeterCharge" value="{{ isset($inputs['lastMeterCharge']) ? $inputs['lastMeterCharge'] : '' }}">
+					<div id="lastMeterChargeLabel" class="text-right">
+						<?
+							echo isset($inputs['lastMeterCharge']) ? '<b>Costo por metro: </b> $' . $inputs['lastMeterCharge'] . '.00' : '';
+						?> 
 						
+
 					</div>
 				</h4>
-				<textarea name="notes" class="form-control" cols="20" rows="4" placeholder="Notas">
-					{{ isset($inputs['notes']) ? $inputs['notes'] : '' }}
-				</textarea>
+				<textarea name="notes" class="form-control" cols="20" rows="4" placeholder="Notas">{{ isset($inputs['notes']) ? $inputs['notes'] : '' }}</textarea>
 
 			</div>
 
@@ -155,7 +157,7 @@
 					var lastMeters = parseInt($('#lastMeters').val());
 					var lastMeterCharge = Math.ceil(lastCharge / lastMeters);
 
-					$('#lastMeterChargeLabel').html('<b>Costo por metro: </b> $ ' + lastMeterCharge + ".00");
+					$('#lastMeterChargeLabel').html('<b>Costo por metro: </b> $ ' + lastMeterCharge + '.00');
 					$('#lastMeterCharge').val(lastMeterCharge);
 
 					var frontLength = parseInt($('#frontLength').val());
