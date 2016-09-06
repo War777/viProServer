@@ -5,7 +5,7 @@
 	<head>
 
 		<meta charset="UTF-8">
-		<title>Inicio</title>
+		<title>Resumen de ingresos</title>
 
 		<link rel="stylesheet" href="{{ asset('public/c/bootstrap.css') }}">
 		<link rel="stylesheet" href="{{ asset('public/c/mainStyles.css') }}">
@@ -26,22 +26,24 @@
 			<br>
 			<h1>Resumen de ingresos Septiembre 2016</h1>
 
+			<br>
+
 			<div class="row">
 				
 				<div class="col-lg-4">
-					
+					<legend>Giro comercial</legend>
 					<? echo Own::arrayToTable($tradingResume, '', '', ['route' => '', 'glyphicon' => '', 'label' => '']) ?>
 
 				</div>
 
 				<div class="col-lg-4">
-					
+					<legend>Zona</legend>
 					<? echo Own::arrayToTable($zonesResume, '', '', ['route' => '', 'glyphicon' => '', 'label' => '']) ?>
 
 				</div>
 
 				<div class="col-lg-4">
-					
+					<legend>Origen</legend>
 					<? echo Own::arrayToTable($localResume, '', '', ['route' => '', 'glyphicon' => '', 'label' => '']) ?>
 
 				</div>

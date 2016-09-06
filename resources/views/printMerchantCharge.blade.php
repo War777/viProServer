@@ -128,16 +128,16 @@ h4 {
 	<tr>
 		<td><b>Telefono</b></td>
 		<td>{{ $merchant->phone }}</td>
-
-		<td><b></b></td>
+		
 		<td align="right"></td>
-
+		<td><b></b></td>
 	
 	</tr>
 	<tr>
 		<td><b>Origen</b></td>
 		<td>{{ $merchant->isLocal == 1 ? 'Local' : 'Externo' }}</td>
 
+		
 		<td><b>Tarifa por metro</b></td>
 		<td align="right">$ 
 			{{
@@ -147,6 +147,8 @@ h4 {
 				) 
 			}}
 		</td>
+
+		
 
 	
 	</tr>
@@ -163,6 +165,9 @@ h4 {
 				)	
 			}}
 		</td>
+		
+
+
 
 
 	</tr>
@@ -182,11 +187,11 @@ h4 {
 	</tr>
 	
 </table>
-
+<br>
 <table border="1">
 	<tr>
 		<td align="center">
-			<img src="c:/xampp/htdocs/laravel/resources/qrcodes/{{ $charge['randomKey'] . '.png' }}" alt="">
+			<img src="{{ $qrUrl }}/resources/qrcodes/{{ $charge['randomKey'] . '.png' }}" alt="">
 		</td>
 		<td style="padding: 20px;">
 			
@@ -197,12 +202,13 @@ h4 {
 			<p>
 				- Favor de cortar el código Qr por el margen negro<br>
 				- Favor de tener <b>SIEMPRE</b> visible el código Qr. <br>
-				- La instalacion de puestos se podra hacer a partir del medio dia Domingo 25 de Septiembre a las 10:00<br>
+				- La instalacion de puestos se podra hacer a partir del dia Domingo 25 de Septiembre a las 10:00 horas<br>
 				- La desinstalacion de puestos se debera realizar el dia Lunes 03 de Octubre para habilitar la vialidad el dia Martes 04 de Octubre   por la ma&ntilde;ana<br>
 				- Queda estrictamente prohibida la re-venta de lugares. <br>
-				- Favor de quitar cuerdas durante las procesiones de la imagen de San Miguel Arcángel, aquellas que obstruyan el paso 	tendrán que ser cortadas en el momento. <br>
-				- Queda prohibido el ambulantaje con carretillas/carritos/etc. que corran el riesgo de obstruir la vialidad las zonas A, B, C. <br>
+				- Favor de quitar cuerdas durante las procesiones de la imagen de San Miguel Arcángel, aquellas que obstruyan el paso tendrán que ser cortadas en el momento. <br>
+				- Queda prohibido el ambulantaje con carretillas/carritos/etc. que corran el riesgo de obstruir la vialidad<br>
 				<b>
+					- Para conservar el lugar para las fiestas de 2017 sera necesario enviar un mensaje de texto al numero celular 4411218973 agregando el numero de folio dentro del mensaje la semana del 22 al 27 de Mayo de 2017 como pre-registro.
 					He leído completamente y acepto términos y condiciones anteriormente descritos.
 				</b>
 				<br>
@@ -217,18 +223,21 @@ h4 {
 		</td>
 	</tr>
 </table>
+
 <hr>
+
 <center>
 
-	<legend>
-		Fiestas patronales San Miguel Villa Progreso 2016
-	</legend>
-	
+<legend>
+	Fiestas patronales San Miguel Villa Progreso 2016
+</legend>
+
 </center>
 
-
 <p>
+
 	Folio: {{ str_pad($charge->id, 6, "0", STR_PAD_LEFT) }}
+
 </p>
 
 <table class="table table-bordered">
@@ -255,16 +264,16 @@ h4 {
 	<tr>
 		<td><b>Telefono</b></td>
 		<td>{{ $merchant->phone }}</td>
-
-		<td><b></b></td>
+		
 		<td align="right"></td>
-
+		<td><b></b></td>
 	
 	</tr>
 	<tr>
 		<td><b>Origen</b></td>
 		<td>{{ $merchant->isLocal == 1 ? 'Local' : 'Externo' }}</td>
 
+		
 		<td><b>Tarifa por metro</b></td>
 		<td align="right">$ 
 			{{
@@ -274,6 +283,8 @@ h4 {
 				) 
 			}}
 		</td>
+
+		
 
 	
 	</tr>
@@ -290,6 +301,9 @@ h4 {
 				)	
 			}}
 		</td>
+		
+
+
 
 
 	</tr>
@@ -313,24 +327,24 @@ h4 {
 <table border="1">
 	<tr>
 		<td align="center">
-			<img src="c:/xampp/htdocs/laravel/resources/qrcodes/{{ $charge['randomKey'] . '.png' }}" alt="">
+			<img src="{{ $qrUrl }}/resources/qrcodes/{{ $charge['randomKey'] . '.png' }}" alt="">
 		</td>
 		<td style="padding: 20px;">
-
+			
 			<center>
 				<b>Terminos y condiciones</b>
 			</center>
 
 			<p>
-				
 				- Favor de cortar el código Qr por el margen negro<br>
 				- Favor de tener <b>SIEMPRE</b> visible el código Qr. <br>
-				- La instalacion de puestos se podra hacer a partir del medio dia Domingo 25 de Septiembre a las 10:00<br>
+				- La instalacion de puestos se podra hacer a partir del dia Domingo 25 de Septiembre a las 10:00 horas<br>
 				- La desinstalacion de puestos se debera realizar el dia Lunes 03 de Octubre para habilitar la vialidad el dia Martes 04 de Octubre   por la ma&ntilde;ana<br>
 				- Queda estrictamente prohibida la re-venta de lugares. <br>
-				- Favor de quitar cuerdas durante las procesiones de la imagen de San Miguel Arcángel, aquellas que obstruyan el paso 	tendrán que ser cortadas en el momento. <br>
-				- Queda prohibido el ambulantaje con carretillas/carritos/etc. que corran el riesgo de obstruir la vialidad las zonas A, B, C. <br>
+				- Favor de quitar cuerdas durante las procesiones de la imagen de San Miguel Arcángel, aquellas que obstruyan el paso tendrán que ser cortadas en el momento. <br>
+				- Queda prohibido el ambulantaje con carretillas/carritos/etc. que corran el riesgo de obstruir la vialidad<br>
 				<b>
+					- Para conservar el lugar para las fiestas de 2017 sera necesario enviar un mensaje de texto al numero celular 4411218973 agregando el numero de folio dentro del mensaje la semana del 22 al 27 de Mayo de 2017 como pre-registro.
 					He leído completamente y acepto términos y condiciones anteriormente descritos.
 				</b>
 				<br>

@@ -86,10 +86,13 @@ class MerchantsController extends Controller
 				'merchant' => $merchant,
 				'charge' => $charge,
 				'trading' => $trading,
-				'zone' => $zone
+				'zone' => $zone,
+				'qrUrl' => Own::getQrUrl()
 			);
 
 			$pdfReceipt = PDF::loadView('printMerchantCharge', $data);
+
+			// return view('printMerchantCharge', $data);
 
 			return $pdfReceipt->stream();
 
@@ -120,12 +123,12 @@ class MerchantsController extends Controller
 			$url = 'https://' . $domain . '/quickCheck?key=' . $charge->randomKey;
 			$file = '' . $charge->randomKey . '.png';
 			
-			QrCode::margin(50);
-			QrCode::errorCorrection('H');
 			QrCode::format('png');
-			QrCode::size(300);
+			QrCode::margin(0);
+			QrCode::errorCorrection('H');
+			QrCode::size(200);
 
-			QrCode::merge('/resources/qrcodes/400-min.png', .7);
+			QrCode::merge('/resources/qrcodes/400-min.png', .5);
 
 			QrCode::generate($url, $path . $file);
 
@@ -847,11 +850,11 @@ class MerchantsController extends Controller
 			'wideLength' => $inputs['wideLength'],
 			'lightsOral' => $inputs['lightsOral'],
 			'lightsReal' => $inputs['lightsOral'],
-			'meterCharge' => ($inputs['meterCharge'] + $inputs['currentIncrease']),
-			'metersCharge' => ($inputs['meterCharge'] + $inputs['currentIncrease']) * $inputs['wideLength'],
+			'meterCharge' => $inputs['meterCharge'],
+			'metersCharge' => $inputs['meterCharge'] * $inputs['wideLength'],
 			'lightCharge' => $inputs['lightCharge'],
 			'lightsCharge' => ($inputs['lightCharge'] * $inputs['lightsOral']),
-			'totalCharge' =>  (($inputs['meterCharge'] + $inputs['currentIncrease']) * $inputs['wideLength']) + ($inputs['lightCharge'] * $inputs['lightsOral']),
+			'totalCharge' =>  ($inputs['meterCharge'] * $inputs['wideLength']) + ($inputs['lightCharge'] * $inputs['lightsOral']),
 			'isChecked' => '0',
 			'score' => '5',
 			'notes' => $inputs['notes']
@@ -947,7 +950,7 @@ class MerchantsController extends Controller
 			UNION ALL
 
 			SELECT 
-				case m.isLocal when m.isLocal = '1' THEN 'Villa Progreso' ELSE 'Externo' end, 
+				case m.isLocal when m.isLocal = 2 THEN 'Externo' ELSE 'Local' end, 
 				sum(c.totalCharge) as '\$\$\$Monto'
 			from charges c
 			join merchants m

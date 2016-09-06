@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 
 use App\Rate;
+
+use App\Own\Own;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -184,3 +186,9 @@ Route::get('logout', 'Auth\AuthController@logout');
 Route::post('checkLogin', 'Auth\AuthController@checkLogin');
 
 Route::get('incomeResume', 'MerchantsController@displayIncomeResume');
+
+Route::get('server', function(){
+	Own::d(Request::capture()->server()['SERVER_NAME']);
+	return "-" . Own::getQrUrl();
+	
+});

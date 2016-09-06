@@ -1,7 +1,7 @@
 <?
 
 namespace App\Own;
-
+use Illuminate\Http\Request;
 use DB;
 
 	/**
@@ -115,11 +115,29 @@ use DB;
 			
 			$isLocal = false;	//Bandera que indica el tipo de servidor
 
-			if(Own::contains(Request::server('HTTP_HOST'), "local", false) == true){
+			if(Own::contains(Request::capture()->server()['SERVER_NAME'], "localhost", false) == true){
 				$isLocal = true;	
 			}
 
 			return $isLocal;
+
+		} 
+
+		public static function getQrUrl(){
+
+			$qrUrl = '';
+
+			if(Own::isLocal() == true){
+
+				$qrUrl = 'c:/xampp/htdocs/laravel';
+
+			} else {
+
+				$qrUrl = '/var/www/html';
+
+			}
+
+			return $qrUrl;
 
 		}
 
