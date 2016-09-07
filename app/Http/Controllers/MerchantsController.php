@@ -979,11 +979,21 @@ class MerchantsController extends Controller
 
 		$zonesResume = Own::queryToArray($queryZoneResume);
 
+		$queryDayResume = "
+			SELECT concat(day(created_at), '-', month(created_at))  as Dia, sum(totalCharge) as '\$\$\$Monto'
+			FROM charges
+			where year = '2016'
+			group by Dia
+			order by created_at;";
+
+        $dayResume = Own::queryToArray($queryDayResume);
+
 		$data = array(
 
 			'tradingResume' => $tradingResume,
 			'zonesResume' => $zonesResume,
-			'localResume' => $localResume
+			'localResume' => $localResume,
+			'dayResume' => $dayResume
 
 		);
 

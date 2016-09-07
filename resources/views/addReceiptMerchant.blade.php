@@ -143,6 +143,7 @@
 			$('.chargeInput').keyup(function(){
 
 				if(
+
 					$('#lastCharge').val() != '' && $('#lastCharge').val() != '0' &&
 					$('#lastMeters').val() != '' && $('#lastMeters').val() != '0' &&
 
@@ -153,8 +154,8 @@
 
 				){
 
-					var lastCharge = parseInt($('#lastCharge').val());
-					var lastMeters = parseInt($('#lastMeters').val());
+					var lastCharge = parseFloat($('#lastCharge').val());
+					var lastMeters = parseFloat($('#lastMeters').val());
 					var lastMeterCharge = Math.ceil(lastCharge / lastMeters);
 
 					$('#lastMeterChargeLabel').html('<b>Costo por metro: </b> $ ' + lastMeterCharge + '.00');
@@ -162,12 +163,12 @@
 
 					var frontLength = parseInt($('#frontLength').val());
 					var wideLength = parseInt($('#wideLength').val());
-					var spotLightsOral = parseInt($('#spotLightsOral').val());
+					var spotLightsOral = $('#spotLightsOral').val() != '0' ? parseInt($('#spotLightsOral').val()) : 0;
 					var lightCost = parseInt($('#lightCost').val());
 					var currentIncrease = parseInt($('#currentIncrease').val());
 
 					var metersCharge = (lastMeterCharge + currentIncrease) * wideLength;
-					var lightCharge = spotLightsOral * lightCost;
+					var lightCharge = (spotLightsOral * lightCost);
 					var totalCharge = metersCharge + lightCharge;
 
 					$('#metersChargeLabel').html('$ ' + metersCharge + ".00");

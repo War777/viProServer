@@ -30,22 +30,27 @@
 
 			<div class="row">
 				
-				<div class="col-lg-4">
+				<div class="col-lg-3">
 					<legend>Giro comercial</legend>
 					<? echo Own::arrayToTable($tradingResume, '', '', ['route' => '', 'glyphicon' => '', 'label' => '']) ?>
 
 				</div>
 
-				<div class="col-lg-4">
+				<div class="col-lg-3">
 					<legend>Zona</legend>
 					<? echo Own::arrayToTable($zonesResume, '', '', ['route' => '', 'glyphicon' => '', 'label' => '']) ?>
 
 				</div>
 
-				<div class="col-lg-4">
+				<div class="col-lg-3">
 					<legend>Origen</legend>
 					<? echo Own::arrayToTable($localResume, '', '', ['route' => '', 'glyphicon' => '', 'label' => '']) ?>
 
+				</div>
+
+				<div class="col-lg-3">
+					<legend>Dia</legend>
+					<? echo Own::arrayToTable($dayResume, '', '', ['route' => '', 'glyphicon' => '', 'label' => '']) ?>
 				</div>
 
 			</div>
