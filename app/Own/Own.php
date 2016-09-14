@@ -878,6 +878,98 @@ use DB;
 		    return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== FALSE);
 		}
 
+
+		/**
+		*
+		* Funcion para obtener los datos para graficar dado un query
+		* @param String title
+		* @param String query
+		* @return Array serie
+		*
+		*/
+
+		public static function getChartSerie($query){
+
+			$serie = array();
+
+			$dataResume = Own::queryToArray($query);
+
+			$dataSeries = array();
+
+			foreach ($dataResume as $data) {
+
+				$serie = array(
+					'name' => $data['name'],
+					'data' => [
+						$data['data']
+					]
+				);
+
+				array_push($dataSeries, $serie);
+
+			}
+
+			return $dataSeries;
+
+		}
+
+		/**
+		*
+		* Funcion que genera los datos para las graficas
+		*
+		*
+		*/
+
+		public static function getIncomeSeries(){
+
+			$queryZones = "select z.description as 'name', sum(c.totalCharge) as data
+				from charges c
+				join zones z
+				on c.idZone = z.id
+				and c.year = '2016'
+				group by z.description
+				order by data";
+
+			$queryLocal = "SELECT 
+					case m.isLocal when m.isLocal = 2 THEN 'Externo' ELSE 'Local' end as 'name', 
+					sum(c.totalCharge) as 'data'
+				from charges c
+				join merchants m
+				on c.idMerchant = m.id
+				and c.year = '2016'
+				group by m.isLocal
+				order by 'data'";
+
+			$queryDay = "SELECT concat(day(created_at), '-', month(created_at))  as name, sum(totalCharge) as 'data'
+				FROM charges
+				where year = '2016'
+				group by name
+				order by created_at;";
+
+				$queryTradings = "SELECT t.description as name, sum(c.totalCharge) as data
+				from charges c
+				join merchants m
+				join tradings t
+				on c.idMerchant = m.id
+				and m.idTrading = t.id
+				and c.year = '2016'
+				group by t.description
+				order by data";
+
+			$incomeSeries = array(
+
+				'zones' => Own::getChartSerie($queryZones),
+				'isLocal' => Own::getChartSerie($queryLocal),
+				'day' => Own::getChartSerie($queryDay),
+				'tradings' => Own::getChartSerie($queryTradings)
+
+			);
+
+			return $incomeSeries;
+
+		}
+
+
 	}
 
 ?>

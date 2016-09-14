@@ -187,8 +187,10 @@ Route::post('checkLogin', 'Auth\AuthController@checkLogin');
 
 Route::get('incomeResume', 'MerchantsController@displayIncomeResume');
 
-Route::get('server', function(){
-	Own::d(Request::capture()->server()['SERVER_NAME']);
-	return "-" . Own::getQrUrl();
-	
+Route::post('getIncomeSeries', function(){
+		
+	$incomeSeries = Own::getIncomeSeries();
+		
+	return Response::json($incomeSeries);
+			
 });

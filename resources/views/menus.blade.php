@@ -69,7 +69,6 @@
 	<br>
 
 	<?
-		echo Own::arrayToTable($menus, 'updateMenu', 'deleteMenu', '');
-	?>
+		echo Own::arrayToTable($menus, 'updateMenu', 'deleteMenu', ['route' => '', 'glyphicon' => '', 'label' => '']); ?>
 
 @stop

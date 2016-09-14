@@ -209,6 +209,7 @@ h4 {
 				- Queda prohibido el ambulantaje con carretillas/carritos/etc. que corran el riesgo de obstruir la vialidad<br>
 				<b>
 					- Para conservar el lugar para las fiestas de 2017 sera necesario enviar un mensaje de texto al numero celular 4411218973 agregando el numero de folio dentro del mensaje la semana del 22 al 27 de Mayo de 2017 como pre-registro.
+				<br>
 					He leído completamente y acepto términos y condiciones anteriormente descritos.
 				</b>
 				<br>
@@ -345,6 +346,9 @@ h4 {
 				- Queda prohibido el ambulantaje con carretillas/carritos/etc. que corran el riesgo de obstruir la vialidad<br>
 				<b>
 					- Para conservar el lugar para las fiestas de 2017 sera necesario enviar un mensaje de texto al numero celular 4411218973 agregando el numero de folio dentro del mensaje la semana del 22 al 27 de Mayo de 2017 como pre-registro.
+
+					<br>
+					
 					He leído completamente y acepto términos y condiciones anteriormente descritos.
 				</b>
 				<br>

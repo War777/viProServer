@@ -41,7 +41,7 @@ class MenusController extends Controller
 
 		$menus = Own::queryToArray(
 			"SELECT 
-				id as '-id',
+				id as '+id',
 				name, 
 				target,
 				hasSubmenus as '!Tiene Sub menus',
