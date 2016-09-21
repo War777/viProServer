@@ -8,6 +8,10 @@ use App\Http\Requests;
 
 use App\Charge;
 
+use App\Merchant;
+
+use App\Map;
+
 use App\Own\Own;
 
 //Clase controladora de los cargos
@@ -17,16 +21,192 @@ class ChargesController extends Controller
 
 	/**
 	*
-	* Funcion para mostrar la plantilla de actualizacion del cargo
+	* Funcion para mostrar la vista de mapeo
+	* @return View
+	*
+	*/
+
+	public function displayMapOutBlade(){
+
+		return view('mapOutCharge');
+
+	}
+
+	/**
+	*
+	* Funcion para mostrar el cargo a mapear
+	* @return View
+	*
+	*/
+
+	public function displayChargeToMap(Request $request){
+
+		$inputs = $request->toArray();
+
+		return $this->displayCharge($inputs['id']);
+
+	}
+
+	/**
+	*
+	* Funcion para mostrar los datos a mapear
+	* @return View
+	*
+	*/
+
+	public function displayCharge($id){
+
+		$charge = Charge::find($id); 
+
+		if(isset($charge)){
+
+			$merchant = Merchant::find($charge->idMerchant);
+
+			$queryFiles = "SELECT id, file FROM maps WHERE idCharge = " . $charge->id . ";";
+
+			$maps = Own::queryToArray($queryFiles);
+
+			$data = array(
+
+				'charge' => $charge,
+				'merchant' => $merchant,
+				'maps' => $maps
+
+			);
+
+			return view('mapOutCharge', $data);
+
+		} else {
+
+			$data = array(
+
+				'message' => 'Cargo no encontrado, favor de intentar con otro folio',
+				'class' => 'bg-danger'
+
+			);
+
+			return view('mapOutCharge', $data);			
+			
+		}
+
+	}
+
+	/**
+	*
+	* Funcion para mostrar los datos a mapear
+	* @return View
+	*
+	*/
+
+	public function mapOutCharge(Request $request){
+
+		$inputs = $request->toArray();
+
+		$mapName = $inputs['idCharge'] . "-" . date('YmdHis') . ".jpg";
+
+		$request->file('map')->move('resources/maps', $mapName);
+
+		$map = new Map;
+
+		$map->idCharge = $inputs['idCharge'];
+		$map->file = $mapName;
+
+		$map->save();
+
+		return $this->displayCharge($inputs['idCharge']);
+
+	}
+
+	/**
+	*
+	* Funcion para eliminar una evidencia
 	* @param Request
 	* @return View
 	*
 	*/
 
-	// public function displayUpdateBlade(Request $request){
+	public function removeMap(Request $request){
 
-	// 	$inputs = $request->toArray
+		$inputs = $request->toArray();
 
-	// }
+		$map = Map::find($inputs['id']);
+
+		if(isset($map)){
+
+			$map->delete();
+
+		}
+		
+		return $this->displayCharge($inputs['idCharge']);
+
+	}
+
+	/**
+	*
+	* Funcion para realizar la
+	* @param Request
+	* @return View
+	*
+	*/
+
+	public function quickCheck(Request $request){
+
+		$inputs = $request->toArray();
+
+		if(isset($inputs['randomKey'])){
+
+			$chargeQuery = "select 
+				c.id,
+			    c.idMerchant,
+			    
+			    c.idTrading,
+			    t.description as 'trading',
+			    
+			    c.idZone,
+			    z.description as 'zone',
+			    
+			    c.year,
+			    c.frontLength,
+			    c.wideLength,
+			    c.lightsOral,
+			    c.lightsReal,
+			    c.meterCharge,
+			    c.metersCharge,
+			    c.lightCharge,
+			    c.lightsCharge,
+			    c.totalCharge,
+			    c.isChecked,
+			    c.score,
+			    c.notes,
+			    c.created_at
+			 
+			from charges c
+			join tradings t
+			on c.idTrading = t.id
+			join zones z 
+			on c.idZone = z.id
+			and c.randomKey = '" . $inputs['randomKey'] . "';";
+
+			$charge = Own::queryToSingleArray($chargeQuery);
+
+			if(count($charge) > 0){
+
+				$merchant = Merchant::find($charge['idMerchant']);
+
+				$data = array(
+
+					'charge' => $charge,
+					'merchant' => $merchant
+
+				);
+
+				return view('quickCheck', $data);
+
+			}
+
+		}
+
+	}
+
 
 }

@@ -638,7 +638,7 @@ use DB;
 
 		}
 
-		/*
+		/**
 		* Funcion que devuelve un arreglo con datos dada una consulta en formato MySql
 		* @param String $query
 		* @return Array $records

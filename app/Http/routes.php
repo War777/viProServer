@@ -138,6 +138,8 @@ Route::group(['middleware' => 'auth'], function(){
 
 	Route::post('updateMerchant', 'MerchantsController@updateMerchant');
 
+	Route::get('quickCheck', 'ChargesController@quickCheck');
+
 	/**
 	*
 	* Rutas para los cargos
@@ -153,6 +155,14 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('addNewCharge', 'MerchantsController@addNewCharge');
 
 	Route::get('deleteCharge', 'MerchantsController@deleteCharge');
+
+	Route::get('mapOutCharge', 'ChargesController@displayMapOutBlade');
+
+	Route::post('mapOutCharge', 'ChargesController@mapOutCharge');
+
+	Route::post('displayChargeToMap', 'ChargesController@displayChargeToMap');
+
+	Route::get('removeMap', 'ChargesController@removeMap');
 
 	/**
 	*
