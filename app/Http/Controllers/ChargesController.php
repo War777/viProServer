@@ -119,6 +119,32 @@ class ChargesController extends Controller
 
 	/**
 	*
+	* Funcion para mostrar los datos a mapear
+	* @return View
+	*
+	*/
+
+	public function mapOutChargeByQr(Request $request){
+
+		$inputs = $request->toArray();
+
+		$mapName = $inputs['idCharge'] . "-" . date('YmdHis') . ".jpg";
+
+		$request->file('map')->move('resources/maps', $mapName);
+
+		$map = new Map;
+
+		$map->idCharge = $inputs['idCharge'];
+		$map->file = $mapName;
+
+		$map->save();
+
+		return $this->quickCheck($request);
+
+	}
+
+	/**
+	*
 	* Funcion para eliminar una evidencia
 	* @param Request
 	* @return View
@@ -133,11 +159,40 @@ class ChargesController extends Controller
 
 		if(isset($map)){
 
+			unlink('resources/maps/' . $map->file);
+			
 			$map->delete();
+
 
 		}
 		
 		return $this->displayCharge($inputs['idCharge']);
+
+	}
+
+	/**
+	*
+	* Funcion para eliminar una evidencia
+	* @param Request
+	* @return View
+	*
+	*/
+
+	public function removeMapByQr(Request $request){
+
+		$inputs = $request->toArray();
+
+		$map = Map::find($inputs['id']);
+
+		if(isset($map)){
+
+			unlink('resources/maps/' . $map->file);
+			
+			$map->delete();
+
+		}
+		
+		return $this->quickCheck($request);
 
 	}
 
@@ -153,7 +208,7 @@ class ChargesController extends Controller
 
 		$inputs = $request->toArray();
 
-		if(isset($inputs['randomKey'])){
+		if(isset($inputs['key'])){
 
 			$chargeQuery = "select 
 				c.id,
@@ -176,6 +231,7 @@ class ChargesController extends Controller
 			    c.lightsCharge,
 			    c.totalCharge,
 			    c.isChecked,
+			    c.randomKey,
 			    c.score,
 			    c.notes,
 			    c.created_at
@@ -185,7 +241,7 @@ class ChargesController extends Controller
 			on c.idTrading = t.id
 			join zones z 
 			on c.idZone = z.id
-			and c.randomKey = '" . $inputs['randomKey'] . "';";
+			and c.randomKey = '" . $inputs['key'] . "';";
 
 			$charge = Own::queryToSingleArray($chargeQuery);
 
@@ -193,18 +249,52 @@ class ChargesController extends Controller
 
 				$merchant = Merchant::find($charge['idMerchant']);
 
+				$queryFiles = "SELECT id, file FROM maps WHERE idCharge = " . $charge['id'] . ";";
+
+				$maps = Own::queryToArray($queryFiles);
+
 				$data = array(
 
 					'charge' => $charge,
-					'merchant' => $merchant
+					'merchant' => $merchant,
+					'maps' => $maps
 
 				);
 
 				return view('quickCheck', $data);
 
+			} else {
+
+				return view('quickCheck');
+
 			}
 
 		}
+
+	}
+
+	/**
+	*
+	* Funcion para realizar la evaluacion del comerciante
+	* @param Request
+	* @return View
+	*
+	*/
+
+	public function evaluateCharge(Request $request){
+
+		$inputs = $request->toArray();
+
+		$charge = Charge::find($inputs['id']);
+
+		$charge->notes = $inputs['notes'];
+		$charge->score = $inputs['score'];
+
+		$charge->isChecked = 1;
+
+		$charge->save();
+
+		return $this->quickCheck($request);
 
 	}
 
