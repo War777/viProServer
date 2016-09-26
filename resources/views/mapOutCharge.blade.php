@@ -106,11 +106,34 @@
 						<td>{{  str_pad($charge->id, 6, "0", STR_PAD_LEFT) }}</td>
 					</tr>
 
+					<tr>
+						<td><b>Largo</b></td>
+						<td>{{ $charge->wideLength }}</td>
+					</tr>
+
+					<tr>
+						<td><b>Frente</b></td>
+						<td>{{ $charge->frontLength }}</td>
+					</tr>
+
+					<tr>
+						<td><b>Focos</b></td>
+						<td>{{ $charge->lightsOral }}</td>
+					</tr>
+
 				</table>
+				<br>
+				
 
 			</div>
 
 		</div>
+		
+		<legend>Notas</legend>
+
+		<p>
+			{{ $charge['notes'] }}
+		</p>
 
 		<br>
 		
