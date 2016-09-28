@@ -107,18 +107,47 @@
 					</tr>
 
 					<tr>
+						<td><b>Giro</b></td>
+						<td align="center">${{ $charge->totalCharge }}.00</td>
+					</tr>
+
+					<tr>
 						<td><b>Largo</b></td>
-						<td>{{ $charge->wideLength }}</td>
+						<td align="center">{{ $charge->wideLength }}</td>
 					</tr>
 
 					<tr>
 						<td><b>Frente</b></td>
-						<td>{{ $charge->frontLength }}</td>
+						<td align="center">{{ $charge->frontLength }}</td>
 					</tr>
 
 					<tr>
 						<td><b>Focos</b></td>
-						<td>{{ $charge->lightsOral }}</td>
+						<td align="center">{{ $charge->lightsOral }}</td>
+					</tr>
+
+					<tr>
+						<td><b> Tarifa </b></td>
+						<td align="center"> ${{ $charge['meterCharge'] }}.00</td>
+					</tr>
+					
+					<tr>
+						<td><b> Tarifa </b></td>
+						<td align="center"> ${{ $charge['lightsCharge'] }}.00</td>
+					</tr> 
+
+					<tr>
+						<td><b> Cargo </b></td>
+						<td align="center"> ${{ $charge['totalCharge'] }}.00</td>
+					</tr>
+
+					<tr>
+						<td><b> Evaluar </b></td>
+						<td align="center"> 
+							<a href="quickCheck?key={{$charge['randomKey']}}">
+								ver
+							</a>
+						</td>
 					</tr>
 
 				</table>

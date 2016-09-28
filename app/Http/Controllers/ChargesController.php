@@ -211,14 +211,14 @@ class ChargesController extends Controller
 		if(isset($inputs['key'])){
 
 			$chargeQuery = "select 
+
 				c.id,
 			    c.idMerchant,
 			    
 			    c.idTrading,
-			    t.description as 'trading',
+			    
 			    
 			    c.idZone,
-			    z.description as 'zone',
 			    
 			    c.year,
 			    c.frontLength,
@@ -237,11 +237,8 @@ class ChargesController extends Controller
 			    c.created_at
 			 
 			from charges c
-			join tradings t
-			on c.idTrading = t.id
-			join zones z 
-			on c.idZone = z.id
-			and c.randomKey = '" . $inputs['key'] . "';";
+			
+			where c.randomKey = '" . $inputs['key'] . "';";
 
 			$charge = Own::queryToSingleArray($chargeQuery);
 

@@ -84,12 +84,12 @@
 
 					<tr>
 						<td><b> Giro </b></td>
-						<td> {{ $charge['trading'] }} </td>
+						<td> {{ $charge['idTrading'] }} </td>
 					</tr>
 
 					<tr>
 						<td><b> Zona </b></td>
-						<td> {{ $charge['zone'] }} </td>
+						<td> {{ $charge['idZone'] }} </td>
 					</tr>
 
 					<tr>
@@ -99,7 +99,23 @@
 
 					<tr>
 						<td><b> Chequeado </b></td>
-						<td> {{ Own::boolToString($charge['trading']) }}</td>
+						<td> {{ Own::boolToString($charge['isChecked']) }}</td>
+					</tr>
+					
+
+					<tr>
+						<td><b> Tarifa </b></td>
+						<td align="center"> ${{ $charge['meterCharge'] }}.00</td>
+					</tr>
+					
+					<tr>
+						<td><b> Tarifa </b></td>
+						<td align="center"> ${{ $charge['lightsCharge'] }}.00</td>
+					</tr> 
+
+					<tr>
+						<td><b> Cargo </b></td>
+						<td align="center"> ${{ $charge['totalCharge'] }}.00</td>
 					</tr>
 
 				</table>
