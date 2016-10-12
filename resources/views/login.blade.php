@@ -37,6 +37,8 @@
 
 						<h1>
 							Bienvenido
+							<br>
+							Aqui va el logo
 						</h1>
 
 					</center>
