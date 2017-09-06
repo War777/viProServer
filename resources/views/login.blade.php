@@ -21,28 +21,21 @@
 
 	<body>
 
-		<div class="container bg">
+		<div class="container">
 			
 			<div class="row">
 				
 				<div class="col-sm-12 text-center">
 					
 					<br>
-					<br>
-					<br>
-					<br>
-					<br>
 					
 					<center>
 
-						<h1>
-							Bienvenido
-							<br>
-							Aqui va el logo
-						</h1>
+						<img src="{{ asset('public/i/villa.jpg') }}" class="img-responsive">
 
 					</center>
 					
+					<br>
 
 				</div>
 

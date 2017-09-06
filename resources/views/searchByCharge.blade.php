@@ -126,7 +126,7 @@
 							<td> {{ $charge->year }} </td>
 							<td> {{ $charge->wideLength }} </td>
 							<td> {{ $charge->meterCharge }} </td>
-							<td> {{ $charge->lightCharge }} </td>
+							<td> {{ $charge->lightsCharge }} </td>
 							<td> {{ $charge->totalCharge }} </td>
 							<td> {{ $charge->created_at }} </td>
 						</tr>
