@@ -193,6 +193,15 @@ Route::group(['middleware' => 'auth'], function(){
 
 	Route::get('showUserMenu', 'UsersController@showUserMenu');
 
+	/**
+	*
+	* Rutas para la busqueda de comerciantes
+	*/
+
+	Route::get('searchByCharge', 'ChargesController@displaySearchByCharge');
+
+	Route::post('searchByCharge', 'ChargesController@searchByCharge');
+
 });
 
 Route::get('login', 'Auth\AuthController@displayLogin');

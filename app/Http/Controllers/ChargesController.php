@@ -12,7 +12,13 @@ use App\Merchant;
 
 use App\Map;
 
+use App\Trading;
+
+use App\Zone;
+
 use App\Own\Own;
+
+use App\Own\VariablesController;
 
 //Clase controladora de los cargos
 class ChargesController extends Controller
@@ -292,6 +298,73 @@ class ChargesController extends Controller
 		$charge->save();
 
 		return $this->quickCheck($request);
+
+	}
+
+	/**
+	*
+	* Funcion para mostrar la vista de la busqueda
+	* @param Request
+	* @return View
+	*
+	*/
+
+	public function displaySearchByCharge(){
+
+		return view('searchByCharge');
+
+	}
+
+	/**
+	*
+	* Funcion para mostrar los datos del comerciante de acuerdo al folio
+	* @param Request
+	* @return View
+	*
+	*/
+
+	public function searchByCharge(Request $request){
+
+		$inputs = $request->toArray();
+
+		$charge = Charge::find($inputs['id']);
+
+		$data = array();
+		
+		$message = '';
+		$class = '';
+
+		if(isset($charge)){
+
+
+		} else {
+
+			$message = 'Folio no encontrado';
+			$class = 'bg-danger';
+
+		}
+
+		$merchant = Merchant::find($charge->idMerchant);
+
+		$trading = Trading::find($charge->idTrading);
+
+		$zone = Zone::find($charge->idZone);
+
+		$data['id'] = $inputs['id'];
+		$data['message'] = $message;
+		$data['class'] = $class;
+		$data['charge'] = $charge;
+		$data['merchant'] = $merchant;
+		$data['trading'] = $trading;
+		$data['zone'] = $zone;
+
+		$data['tradingsValues'] = VariablesController::getTradingsArray();
+		$data['zonesValues'] = VariablesController::getZonesArray();
+
+		$data['lightCharge'] = VariablesController::getLightCharge();
+		$data['currentIncrease'] = VariablesController::getCurrentIncrease();
+
+		return view('searchByCharge', $data);
 
 	}
 
