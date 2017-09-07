@@ -68,7 +68,7 @@
 			
 			<div class="col-sm-4">
 				<legend>
-					Recibo 2015
+					Recibo anterior
 				</legend>
 
 				<input type="text" id="lastMeters" name="lastMeters" class="form-control numeric chargeInput" placeholder="Metros" required value="">
@@ -90,7 +90,7 @@
 			<div class="col-sm-4">
 				
 				<legend>
-					Recibo 2016
+					Recibo {{ Date('Y') }}
 				</legend>
 
 				{{ Own::arrayToDropdown('Giro', 'idTrading', $tradingsValues) }}

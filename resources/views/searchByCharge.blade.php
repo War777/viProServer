@@ -153,7 +153,7 @@
 			Recibo {{ Date('Y') }}
 		</legend>
 
-		<form action="addNewCharge" method="post">
+		<form action="addNewCharge" method="post" class="validate">
 
 			{{ csrf_field() }}
 			
@@ -184,7 +184,7 @@
 					<!-- Esta variable no se usa en esta rutina ni es evaluada por el archivo js para verificar el costo -->
 					<input type="hidden" id="currentIncrease" name="currentIncrease" value="{{ $currentIncrease }}">
 
-					<input type="hidden" id="meterCharge" name="meterCharge">
+					<input type="hidden" id="meterCharge" name="meterCharge" value="{{ $charge->meterCharge}}">
 
 					<textarea name="notes" class="form-control" id="" cols="10" rows="">Sin observaciones</textarea>
 
@@ -200,7 +200,7 @@
 					
 					<td align="right">
 						<div id="meterChargeLabel">
-							
+							{{ $charge->meterCharge}}
 						</div>
 					</td>
 				</tr>
@@ -209,7 +209,7 @@
 					
 					<td align="right">
 						<div id="metersChargeLabel">
-							
+							{{ $charge->meterCharge * $charge->wideLength}}
 						</div>
 					</td>
 				</tr>
@@ -218,7 +218,7 @@
 					
 					<td align="right">
 						<div id="lightsChargeLabel">
-							
+							{{ $charge->lightsCharge }}
 						</div>
 					</td>
 				</tr>
@@ -227,7 +227,7 @@
 					
 					<td align="right">
 						<div id="totalChargeLabel">
-							
+							{{ $charge->totalCharge }}
 						</div>
 					</td>
 				</tr>
@@ -252,7 +252,7 @@
 
 					</button>
 
-					<button type="submit" id="submitButton" class="btn btn-primary disabled">
+					<button type="submit" id="submitButton" class="btn btn-primary">
 
 						<i class="glyphicon glyphicon-plus"></i> Agregar
 

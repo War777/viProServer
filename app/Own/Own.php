@@ -26,7 +26,7 @@ use DB;
 ?>
 				<div class="dropdown">
 
-					<input type="hidden" name="<? echo $inputName ?>" class="dropDownValue" value="">
+					<input type="hidden" name="<? echo $inputName ?>" class="dropDownValue" value="" >
 
 					<button class="btn btn-default dropdown-toggle" type="button" id="dropDownMenu<?echo $title?>" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 						
