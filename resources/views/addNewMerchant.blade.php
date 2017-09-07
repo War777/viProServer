@@ -50,7 +50,7 @@
 
 				<div class="col-sm-4">
 					
-					<legend>Recibo 2016</legend>
+					<legend>Recibo {{ Date('Y') }}</legend>
 
 					<input type="text" id="worFrontLength" name="frontLength" class="form-control numeric worChargeInput" placeholder="Metros de frente" required value="{{ isset($inputs['frontLength']) ? $inputs['frontLength'] : '' }}">
 

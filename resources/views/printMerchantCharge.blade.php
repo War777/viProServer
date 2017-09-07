@@ -202,13 +202,13 @@ h4 {
 			<p>
 				- Favor de cortar el código Qr por el margen negro<br>
 				- Favor de tener <b>SIEMPRE</b> visible el código Qr. <br>
-				- La instalacion de puestos se podra hacer a partir del dia Domingo 25 de Septiembre a las 10:00 horas<br>
-				- La desinstalacion de puestos se debera realizar el dia Lunes 03 de Octubre para habilitar la vialidad el dia Martes 04 de Octubre   por la ma&ntilde;ana<br>
-				- Queda estrictamente prohibida la re-venta de lugares. <br>
+				- La instalacion de puestos se podra hacer a partir del dia Sabado anterior al dia de inauguracion a las 10:00 horas<br>
+				- La desinstalacion de puestos se debera realizar el dia Martes posterior a la clausura para habilitar la vialidad<br>
+				- Queda estrictamente prohibida la re-venta de lugares.<br>
 				- Favor de quitar cuerdas durante las procesiones de la imagen de San Miguel Arcángel, aquellas que obstruyan el paso tendrán que ser cortadas en el momento. <br>
 				- Queda prohibido el ambulantaje con carretillas/carritos/etc. que corran el riesgo de obstruir la vialidad<br>
 				<b>
-					- Para conservar el lugar para las fiestas de 2017 sera necesario enviar un mensaje de texto al numero celular 4411218973 agregando el numero de folio dentro del mensaje la semana del 22 al 27 de Mayo de 2017 como pre-registro.
+					- Para conservar el lugar para las fiestas del a&ntilde;o siguiente sera necesario enviar un mensaje de texto al numero celular 4411218973 agregando el numero de folio dentro del mensaje la primera semana de Mayo del a&ntilde;o siguiente como pre-registro.
 				<br>
 					He leído completamente y acepto términos y condiciones anteriormente descritos.
 				</b>
@@ -339,13 +339,13 @@ h4 {
 			<p>
 				- Favor de cortar el código Qr por el margen negro<br>
 				- Favor de tener <b>SIEMPRE</b> visible el código Qr. <br>
-				- La instalacion de puestos se podra hacer a partir del dia Domingo 25 de Septiembre a las 10:00 horas<br>
-				- La desinstalacion de puestos se debera realizar el dia Lunes 03 de Octubre para habilitar la vialidad el dia Martes 04 de Octubre   por la ma&ntilde;ana<br>
-				- Queda estrictamente prohibida la re-venta de lugares. <br>
+				- La instalacion de puestos se podra hacer a partir del dia Sabado anterior al dia de inauguracion a las 10:00 horas<br>
+				- La desinstalacion de puestos se debera realizar el dia Martes posterior a la clausura para habilitar la vialidad<br>
+				- Queda estrictamente prohibida la re-venta de lugares.<br>
 				- Favor de quitar cuerdas durante las procesiones de la imagen de San Miguel Arcángel, aquellas que obstruyan el paso tendrán que ser cortadas en el momento. <br>
 				- Queda prohibido el ambulantaje con carretillas/carritos/etc. que corran el riesgo de obstruir la vialidad<br>
 				<b>
-					- Para conservar el lugar para las fiestas de 2017 sera necesario enviar un mensaje de texto al numero celular 4411218973 agregando el numero de folio dentro del mensaje la semana del 22 al 27 de Mayo de 2017 como pre-registro.
+					- Para conservar el lugar para las fiestas del a&ntilde;o siguiente sera necesario enviar un mensaje de texto al numero celular 4411218973 agregando el numero de folio dentro del mensaje la primera semana de Mayo del a&ntilde;o siguiente como pre-registro.
 
 					<br>
 					

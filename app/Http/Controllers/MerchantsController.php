@@ -120,7 +120,7 @@ class MerchantsController extends Controller
 			$domain = Own::queryToData($queryDomain);
 
 			$path = 'resources/qrcodes/';
-			$url = 'https://' . $domain . '/quickCheck?key=' . $charge->randomKey;
+			$url = $domain . '/quickCheck?key=' . $charge->randomKey;
 			$file = '' . $charge->randomKey . '.png';
 			
 			QrCode::format('png');

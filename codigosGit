@@ -1,0 +1,5 @@
+Forzar el push remoto 
+git push production (Repositorio) master (Nombre de la rama)
+
+Para usar los cambios en el servidor es con el sigueinte comando justo despues de hacer push
+git checkout -f master

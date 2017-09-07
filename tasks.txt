@@ -1,1 +1,28 @@
-Revision de muestra de usuarios, verificar los datos que se muestran.
+Esta esta hecha
+
+Busqueda por folio
+
+Crear plantilla para buscar por folio de cargo.
+Mostrar los datos del comerciante y del anio anterior.
+Automaticamente generar otro cargo con el numero de metros flexible.
+Agregar cargo al comerciante con el anio 2017.
+
+-----------------------------------------------------------------------------
+Esta quedara pendiente
+
+Busqueda por codigo Qr.
+
+Generar la misma rutina a partir del codigo qr.
+Extraer el folio de la clave unica.
+Extraer los datos del comerciante.
+Mostrar los datos del comerciante y del anio anterior.
+Automaticamente generar otro cargo con el numero de metros flexible.
+Agregar cargo al comerciante con el anio 2017.
+
+
+551
+
+
+Verificar todas las zonas y todos los giros agregados.
+
+Revisar el fallo de cuando no existe la tarifa en la zona y giro en la consulta por folio por que aparece en blanco

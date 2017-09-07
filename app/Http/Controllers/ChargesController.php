@@ -336,27 +336,42 @@ class ChargesController extends Controller
 
 		if(isset($charge)){
 
+			$merchant = Merchant::find($charge->idMerchant);
+
+			$trading = Trading::find($charge->idTrading);
+
+			$zone = Zone::find($charge->idZone);
+
+			if(isset($trading) == false){
+
+				$message .= 'Tarifa no encontrada <br>';
+				$class .= ' bg-danger';
+
+			}
+
+			if(isset($zone) == false){
+
+				$message .= 'Zona no encontrada <br>';
+				$class .= ' bg-danger';
+
+			}
+
+			$data['charge'] = $charge;
+			$data['merchant'] = $merchant;
+			$data['trading'] = $trading;
+			$data['zone'] = $zone;
 
 		} else {
 
-			$message = 'Folio no encontrado';
+			$message = 'Folio no encontrado <br>';
 			$class = 'bg-danger';
 
 		}
 
-		$merchant = Merchant::find($charge->idMerchant);
-
-		$trading = Trading::find($charge->idTrading);
-
-		$zone = Zone::find($charge->idZone);
-
 		$data['id'] = $inputs['id'];
 		$data['message'] = $message;
 		$data['class'] = $class;
-		$data['charge'] = $charge;
-		$data['merchant'] = $merchant;
-		$data['trading'] = $trading;
-		$data['zone'] = $zone;
+		
 
 		$data['tradingsValues'] = VariablesController::getTradingsArray();
 		$data['zonesValues'] = VariablesController::getZonesArray();

@@ -47,7 +47,7 @@
 
 	</div>
 
-	@if(isset($charge) && isset($trading) && isset($zone))
+	@if(isset($charge))
 
 		<div class="row">
 			
@@ -121,8 +121,8 @@
 
 						<tr>
 							<td> {{ $charge->id }} </td>
-							<td> {{ $trading->description }} </td>
-							<td> {{ $zone->description }} </td>
+							<td> {{ isset($trading->description) ? $trading->description : '' }} </td>
+							<td> {{ isset($zone->description) ? $zone->description : '' }} </td>
 							<td> {{ $charge->year }} </td>
 							<td> {{ $charge->wideLength }} </td>
 							<td> {{ $charge->meterCharge }} </td>
