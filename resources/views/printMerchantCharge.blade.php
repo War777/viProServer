@@ -93,7 +93,7 @@ h4 {
 <center>
 
 <legend>
-	Fiestas patronales San Miguel Villa Progreso 2016
+	Fiestas patronales San Miguel Villa Progreso {{ Date('Y') }}
 </legend>
 
 </center>
@@ -230,7 +230,7 @@ h4 {
 <center>
 
 <legend>
-	Fiestas patronales San Miguel Villa Progreso 2016
+	Fiestas patronales San Miguel Villa Progreso {{ Date('Y') }}
 </legend>
 
 </center>
