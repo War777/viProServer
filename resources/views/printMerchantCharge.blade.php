@@ -4,6 +4,10 @@
 
 ?>
 
+<head>
+	<link rel="icon" href="{{ asset('public/i/villaIcon.jpg') }}">
+</head>
+
 <style>
 
 	html {
@@ -109,7 +113,7 @@ h4 {
 		<td>
 			<b>Fecha</b>
 		</td>
-		<td align="center">
+		<td align="">
 			{{ $charge->created_at }}
 		</td>
 		
@@ -147,9 +151,6 @@ h4 {
 				) 
 			}}
 		</td>
-
-		
-
 	
 	</tr>
 	<tr>
@@ -166,10 +167,6 @@ h4 {
 			}}
 		</td>
 		
-
-
-
-
 	</tr>
 	<tr>
 		<td><b>Zona</b></td>
@@ -228,11 +225,7 @@ h4 {
 <hr>
 
 <center>
-
-<legend>
-	Fiestas patronales San Miguel Villa Progreso {{ Date('Y') }}
-</legend>
-
+<br>
 </center>
 
 <p>
@@ -312,15 +305,7 @@ h4 {
 		<td><b>Zona</b></td>
 		<td>{{ $zone }}</td>
 		<td><b>Total</b></td>
-		<td align="right">$
-			{{ 
-				number_format(
-					$charge->totalCharge,
-					2 
-				)	
-			}}
-		</td>
-	
+		<td align="right">$ {{ number_format($charge->totalCharge, 2)}}</td>
 	</tr>
 	
 </table>

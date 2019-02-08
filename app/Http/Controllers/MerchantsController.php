@@ -69,11 +69,12 @@ class MerchantsController extends Controller
 	public function printMerchantCharge(Request $request){
 
 		$inputs = $request->toArray();
-		
+				
 		$id = $inputs['id'];
 
 		if(isset($id)){
 
+			//
 			$charge = Charge::find($inputs['id']);
 
 			$merchant = Merchant::find($charge->idMerchant);
@@ -126,7 +127,7 @@ class MerchantsController extends Controller
 			QrCode::format('png');
 			QrCode::margin(0);
 			QrCode::errorCorrection('H');
-			QrCode::size(200);
+			QrCode::size(170);
 
 			QrCode::merge('/resources/qrcodes/400-min.png', .5);
 
@@ -180,25 +181,7 @@ class MerchantsController extends Controller
 
 		$merchant = $this->firstOrNewMerchant($inputs);
 
-		// $lastChargeAttributes = array(
-		// 	'idMerchant' => $merchant->id,
-		// 	'idZone' => $inputs['idZone'],
-		// 	'year' => '2015',
-		// 	'frontLength' => $inputs['frontLength'],
-		// 	'wideLength' => $inputs['lastMeters'],
-		// 	'lightsOral' => $inputs['lightsOral'],
-		// 	'lightsReal' => $inputs['lightsOral'],
-		// 	'meterCharge' => $inputs['lastMeterCharge'],
-		// 	'metersCharge' => $inputs['lastMetersCharge'],
-		// 	'lightCharge' => $inputs['lightCharge'],
-		// 	'lightsCharge' => $inputs['lastLightCharge'],
-		// 	'totalCharge' =>  $inputs['lastMetersCharge'] + $inputs['lastLightCharge'],
-		// 	'isChecked' => '0',
-		// 	'score' => '5',
-		// 	'notes' => $inputs['notes']
-		// );
-		
-		// $lastCharge = $this->firstOrNewCharge($lastChargeAttributes);
+
 
 		$chargeAttributes = array(
 			'idMerchant' => $merchant->id,

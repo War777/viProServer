@@ -129,7 +129,7 @@ use DB;
 
 			if(Own::isLocal() == true){
 
-				$qrUrl = 'c:/xampp/htdocs/laravel';
+				$qrUrl = 'c:/xampp/htdocs/vipro';
 
 			} else {
 

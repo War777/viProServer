@@ -9,6 +9,8 @@
 	<link rel="stylesheet" href="{{ asset('public/c/datepicker.css') }}">
 	<link rel="stylesheet" href="{{ asset('public/c/simple-sideBar.css') }}">
 
+	<link rel="icon" href="{{ asset('public/i/villaIcon.jpg') }}">
+
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<meta charset="UTF-8">
@@ -44,43 +46,10 @@
 
 		    	<div class="nav navbar-nav">
 
-			    	<!-- <li>
-			    		<a href="#">
-			    			Seccion 1
-			    		</a>
-			    	</li>
-
-			    	<li class="dropdown">
-
-						<a href="#" data-toggle="dropdown"> 
-
-							<b class="glyphicon glyphicon-asterisk"></b>Seccion 2 <small>Small</small>
-
-							<span class="caret"></span>
-
-						</a>
-
-						<ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
-							<li class="dropdown-submenu">
-								<a tabindex="-1" href="#">Level 1</a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Sub Level 11 </a></li>
-									<li><a href="#">Sub Level 12 </a></li>
-								</ul>
-							</li>
-						</ul>
-
-					</li> -->
-
 		    	</div>
 
 		    	<ul class="nav navbar-nav navbar-right">
 		    		
-		    		<!-- <li class="dropdown">
-		    			<a href="#" class="screen">
-		    				Start
-		    			</a>
-		    		</li> -->
 
 					<li class="dropdown">
 			    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -88,9 +57,7 @@
 			    			<span class="caret"></span>
 			    		</a>
 			    		<ul class="dropdown-menu">
-			    			<!-- <li>
-			    				<a href="profile">Perfil</a>
-			    			</li> -->
+			    			
 			    			<li>
 			    				<a href="logout">Cerrar sesi&oacute;n</a>
 			    			</li>

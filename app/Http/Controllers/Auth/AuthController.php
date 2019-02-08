@@ -76,7 +76,7 @@ class AuthController extends Controller
 
     /**
     *
-    * Funcion para verificar el inicio de sesion
+    * Function to check a valid login
     * @param Request $request
     * @return view responseView
     *
@@ -109,7 +109,29 @@ class AuthController extends Controller
 
             $request->session()->put('menuHtml', $menuHtml);
 
-            return view('home');
+            $query = "SELECT 
+                m.id as '+id', 
+                m.firstName as 'A. Paterno', 
+                m.lastName as 'A. Materno', 
+                m.names as 'Nombre(s)', 
+                m.isLocal as '!Es local', 
+                m.phone as 'Telefono .tr', 
+                t.description as 'Giro',
+                m.incomeType as 'Ingreso', 
+                m.created_at as 'F. Creacion .tc'
+            FROM merchants m
+            JOIN tradings t
+            ON m.idTrading = t.id
+            WHERE m.deleted_at IS NULL;";
+
+        $merchants = Own::queryToArray($query);
+
+        $data = array(
+            'merchants' => $merchants,
+            'message' => "",
+            'class' => ""
+        );
+            return view('merchants', $data);
 
         } else {
 
@@ -127,7 +149,7 @@ class AuthController extends Controller
 
     /**
     *
-    * Funcion que regresa la vista de login por dada la url por metodo get
+    * Return just the login view
     * @return view login
     *
     */
@@ -140,7 +162,7 @@ class AuthController extends Controller
 
     /**
     *
-    * Funcion para cerrar la sesion
+    * We close the session
     * @return view login
     *
     */

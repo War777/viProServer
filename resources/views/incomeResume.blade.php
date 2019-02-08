@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-
-<html lang="en">
-
-	<head>
-
-		<meta charset="UTF-8">
-		<title>Resumen de ingresos</title>
-		
-		<link rel="stylesheet" href="{{ asset('public/c/bootstrap.css') }}">
-		<link rel="stylesheet" href="{{ asset('public/c/mainStyles.css') }}">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-
-	</head>
 
 <?
 
@@ -19,9 +5,13 @@
 
 ?>
 
-	<body>
+@extends('layout')
 
-		<div class="container">
+@section('title')
+	Income resume
+@stop
+
+@section('content')
 
 			{{ csrf_field() }}
 			
@@ -82,29 +72,19 @@
 
 			</div>
 
-		</div>
-		
-		<br>
-		<br>
+@stop	
 
-		<div id="message">
-			
-		</div>
-		
-	</body>
+@section('script')
+	<script src="{{ asset('public/j/jquery-3.0.0.js') }}"></script>
+	<script src="{{ asset('public/j/bootstrap.js') }}"></script>
 
-</html>
-
-<script src="{{ asset('public/j/jquery-3.0.0.js') }}"></script>
-<script src="{{ asset('public/j/bootstrap.js') }}"></script>
-
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script>
-		
+
 		$(document).ready(function(){
 
+			// Get data series from database
 			$.ajax({
 
 				url : 'getIncomeSeries',
@@ -129,6 +109,8 @@
 
 			});
 
+
+			// We render each data serie to a bar chart
 			function renderIncomeChart(grossData, localizator){
 
 				var serieValues = [];
@@ -207,5 +189,5 @@
 			}
 
 		});
-
 	</script>
+@stop	

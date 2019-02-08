@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 	/**
 	*
-	* Rutas para los usuarios
+	* Users routes
 	*
 	*/
 	Route::post('addUser', 'UsersController@addUser');
@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 	/**
 	*
-	* Rutas para las zonas
+	* Zones routes
 	*
 	*/
 
@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 	/**
 	*
-	* Rutas para las zonas
+	* Tradings routes
 	*
 	*/
 
@@ -76,7 +76,7 @@ Route::group(['middleware' => 'auth'], function(){
 	
 	/**
 	*
-	* Rutinas para las tarifas
+	* Rates routes
 	*
 	*/
 
@@ -110,7 +110,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 	/**
 	*
-	* Rutas para los comerciantes
+	* Merchants routes
 	*
 	*/
 
@@ -144,7 +144,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 	/**
 	*
-	* Rutas para los cargos
+	* Charges routes
 	*
 	*/
 
@@ -172,7 +172,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 	/**
 	*
-	* Rutas para las variables
+	* Variables routes
 	* 
 	*/
 
@@ -181,7 +181,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('variables', 'VariablesController@displayGetVariables');
 	
 	/**
-	* Rutas para los menus
+	* Menus routes
 	*
 	*/
 	
@@ -195,7 +195,7 @@ Route::group(['middleware' => 'auth'], function(){
 
 	/**
 	*
-	* Rutas para la busqueda de comerciantes
+	* Search routes
 	*/
 
 	Route::get('searchByCharge', 'ChargesController@displaySearchByCharge');

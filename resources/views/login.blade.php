@@ -6,7 +6,7 @@
 
 		<meta charset="UTF-8">
 		<title>Inicio</title>
-
+		<link rel="icon" href="{{ asset('public/i/villaIcon.jpg') }}">
 		<link rel="stylesheet" href="{{ asset('public/c/bootstrap.css') }}">
 		<link rel="stylesheet" href="{{ asset('public/c/mainStyles.css') }}">
 		<meta name="viewport" content="width=device-width, initial-scale=1">

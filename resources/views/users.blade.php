@@ -42,13 +42,13 @@
 						
 						<div class="row">
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="names" placeholder="Nombre(s)" value="Oscar Jesus">
+								<input type="text" class="form-control" name="names" placeholder="Nombre(s)" value="">
 							</div>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="lastName" placeholder="Apellido paterno" value="Resendiz">
+								<input type="text" class="form-control" name="lastName" placeholder="Apellido paterno" value="">
 							</div>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="secondName" placeholder="Apellido materno" value="Mendoza">
+								<input type="text" class="form-control" name="secondName" placeholder="Apellido materno" value="">
 							</div>
 						</div>
 
@@ -60,7 +60,7 @@
 									
 									<div class="input-group">
 
-										<input type="text" class="form-control" name="birthDate"  value="" placeholder="aaaa-mm-dd">
+										<input type="text" class="form-control" name="birthDate"  value="" placeholder="F. Nacimiento">
 
 										<span class="input-group-addon" id="basic-addon2">
 
@@ -80,13 +80,13 @@
 
 							<div class="col-xs-4">
 								
-								<input type="text" class="form-control" name="curp" placeholder="Curp" value="REMO911120HQTSNS00">
+								<input type="text" class="form-control" name="curp" placeholder="Curp" value="">
 
 							</div>
 
 							<div class="col-xs-4">
 
-								<input type="email" class="form-control" name="email" placeholder="E-mail" value="oscarResendizUaq@gmail.com">
+								<input type="email" class="form-control" name="email" placeholder="E-mail" value="">
 								
 							</div>
 							
@@ -94,13 +94,13 @@
 
 						<div class="row">
 							<div class="col-xs-4">
-								<input type="password" class="form-control" name="password" placeholder="Password" value="yaniviendo">
+								<input type="password" class="form-control" name="password" placeholder="Password" value="">
 							</div>
 							<div class="col-xs-4">
-								<input type="password" class="form-control" name="" placeholder="Confirmar password" value="yaniviendo">
+								<input type="password" class="form-control" name="" placeholder="Confirmar password" value="">
 							</div>
 							<div class="col-xs-4">
-								<input type="text" class="form-control" name="phone" placeholder="Telefono" value="4411218973">
+								<input type="text" class="form-control" name="phone" placeholder="Telefono" value="">
 							</div>
 						</div>
 
@@ -113,11 +113,11 @@
 								<input type="checkbox" name="whatsapp" checked> Whatsapp
 							</div>
 							<div class="col-xs-4">
-								<input type="text" class="form-control" name="street" placeholder="Calle" value="Villahermosa">
+								<input type="text" class="form-control" name="street" placeholder="Calle" value="">
 							</div>
 						</div>
 
-						<input type="text" class="form-control" name="gmap" placeholder="Mapa" value=" - ">
+						<input type="text" class="form-control" name="gmap" placeholder="Mapa" value="">
 
 						<br>
 
